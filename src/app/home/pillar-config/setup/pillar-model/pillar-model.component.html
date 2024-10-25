@@ -1,0 +1,33 @@
+<async-loader *ngIf="loading">{{statusMsg}}</async-loader>
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title"> Create Pillar</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-10">
+            <div class="form-group">
+              <label for="pillarName">Enter Pillar Name</label>
+              <input id="pillarName" [(ngModel)]="pillarName" type="text" class="form-control"
+                placeholder="Pillar Name">
+            </div>
+          </div>
+    
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" [ngClass]="{'disabled' :pillarName?.length===0}"
+      (click)="createPillar()">Create</button>
+  </div>
+</div>
+
+
+<!--  -->

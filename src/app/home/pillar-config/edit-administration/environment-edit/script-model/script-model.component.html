@@ -1,0 +1,108 @@
+<async-loader *ngIf="loading">Creating Scripts...</async-loader>
+<form [formGroup]="domain">
+    <div class="modal-header">
+        <h4 class="modal-title">Create Scripts</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label> Action Name</label>
+                    <select class="form-control" formControlName="actionName">
+                        <option *ngFor="let action of actions" value="{{action}}">{{action}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col" >
+                <button type="button" class="btn btn-secondary" (click)="addScript()">Add Script</button>
+            </div>
+        </div>
+        <ng-container formArrayName="scripts">
+            <div class="p-1 m-1 border" *ngFor="let script of scripts.controls; index as i">
+                <div class="d-flex flex-row-reverse">
+                    <button type="button" class="btn btn-secondary float-right" (click)="removeScript(i)">Remove
+                        Script</button>
+                </div>
+
+                <ng-container [formGroupName]="i">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Step No</label>
+                                <div>{{script.value.step}}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>S3 location</label>
+                                    <input type="text" formControlName="s3Location" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label>Working Directory</label>
+                                    <input type="text" formControlName="workingDirectory" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Expected Time</label>
+                                <input type="number" formControlName="expectedTime" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Script Execution</label>
+                                <input type="text" formControlName="scriptExecution" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                  
+
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Status</label>
+                                <input type="text" formControlName="status" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label>Os</label>
+                                <select class="form-control" formControlName="os">
+                                    <option *ngFor="let os of OSs" value="{{os}}">{{os}}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+        </ng-container>
+
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]=" !domain.valid " (click)="save()">Save</button>
+    </div>
+</form>

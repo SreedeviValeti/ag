@@ -1,0 +1,27 @@
+<div class="campus-solutions-container">
+    <div class="row">
+        <div class="col">
+            <h2 class="page-heading" style="color: darkblue;">
+                Assessment</h2>
+        </div>
+    </div>
+    <ul class="primary-tabs mt-3">
+        <li *ngFor="let tab of tabs" [ngClass]="{'selected': selectedTab === tab.title}"
+            (click)="selectedTab = tab.title">
+            {{tab.title}}
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col">
+            <div class="content-container border shadow-sm">
+                <!-- <div [hidden]="selectedTab !== 'Applications'">
+                    <app-client-config></app-client-config>
+                </div> -->
+                <div [hidden]="selectedTab !== 'Config'">
+                    <app-client-details></app-client-details>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

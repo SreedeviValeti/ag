@@ -1,0 +1,29 @@
+<async-loader *ngIf="loading"></async-loader>
+<div row *ngIf="!loading" >
+    <div class="col-6" style="margin-top: 30px">
+        <h1  style="font-size: 30px; color: darkblue;" class="tab-title">Log Retention</h1>
+      </div>
+      <div class="col-8">
+    <form class="content-container" [formGroup]="logretention"  (ngSubmit)="updateLogs()" >
+            <div class="col-6">
+            <div class="form-group">
+                <label class = "tab-title">Environment Type</label>
+                <input type="text"  formControlName="envtype" class="form-control" value="none" [(ngModel)]="reponse.envtype" disabled>
+            </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label class = "tab-title">Environment Name</label>
+                    <input type="text" formControlName="envname" class="form-control" value="none" [(ngModel)]="reponse.envname" disabled>
+                </div>
+                </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label class = "tab-title">Expiration Days</label>
+                    <input type="text" formControlName="ExpirationDays" class="form-control" [(ngModel)]="reponse.ExpirationDays">
+                </div>
+            </div>
+        <button class="btn btn-primary button-color">Update</button>    
+    </form>
+    </div>
+</div>

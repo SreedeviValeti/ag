@@ -1,0 +1,47 @@
+<async-loader *ngIf="loading"></async-loader>
+<div class="campus-solutions-container" >
+    <div class="row">
+      <div class="col">
+        <h2 class="page-heading"><!--{{appName}}<sup class="ph-sub-text">{{selectedEnv}}</sup>-->Infrastructure Metrics</h2>
+        <!-- Need to the get the value of selected env prod or non - prod -->
+      </div>
+    </div>
+    <!-- <div class="row mb-3">
+      <div class="col">
+        <div class="form-check-inline" *ngFor="let env of envs">
+          <label class="form-check-label">
+            <input [(ngModel)]="selectedEnv" (ngModelChange)="onEnvChange($event, env.value)" 
+             type="radio" class="form-check-input" name="env" value="{{env.name}}" > {{env.name}}
+          </label>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="row">
+      <div class="col">
+          <ul class="primary-tabs">
+            <li *ngFor="let network of metricsData " 
+            (click)="ngShowNetwork(network)"
+            [ngClass]="{'selected':network.name == selectedNetworkName}">
+                {{network.name}}
+            </li>
+          </ul>
+          <ul  class="secondary-tabs shadow">
+            <li *ngFor="let server of selectedNetwork.data"
+            [ngClass]="{'selected':selectedServerName == server.serverName}"
+            (click)="showServer(server)"
+            >
+                {{server.serverName}}</li>
+          </ul>
+      </div>
+    </div> -->
+    <div class="row"  >
+        <div class="graph-container shadow">
+                <iframe style="  width: 100%;
+                height: 100vh;
+                overflow: hidden;" scrolling="no" [src]=inframetricurl width="100%" height="450" frameborder="0">
+                    </iframe>
+      </div>
+    </div>
+  </div>
+  
+  

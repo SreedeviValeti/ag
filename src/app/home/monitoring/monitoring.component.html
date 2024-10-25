@@ -1,0 +1,144 @@
+<div class="scheduler-container">
+  <div class="row">
+    <div class="col">
+      <h2 class="page-heading">Scheduler</h2>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <fieldset class="the-fieldset">
+          <legend class="the-legend">Specify With <i class="not-optional"></i></legend>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="specifyWith" id="specifyWith1" value="option1" checked>
+            <label class="form-check-label" for="specifyWith1">
+              Cron Schedule Builder
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="specifyWith" id="specifyWith2" value="option2">
+            <label class="form-check-label" for="specifyWith2">
+              Rate Schedule Builder
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="specifyWith" id="specifyWith3" value="option3">
+            <label class="form-check-label" for="specifyWith3">
+              CRON / Rate Expression
+            </label>
+          </div>
+        </fieldset>
+    </div>
+    <div class="col">
+      <fieldset class="the-fieldset">
+          <legend class="the-legend">Windows Starts <i class="not-optional"></i></legend>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="windowStarts" id="windowStarts1" value="option1" checked>
+            <label class="form-check-label" for="windowStarts1">
+              Every 30 minutes
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="windowStarts" id="windowStarts2" value="option2">
+            <label class="form-check-label" for="windowStarts2">
+              Every <div class="form-group d-inline mr-2 "> <select class="form-control-inline">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </select></div>hours
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="windowStarts" id="windowStarts3" value="option3">
+            <label class="form-check-label" for="windowStarts3">
+              Every <div class="form-group d-inline mx-2"> <select class="form-control-inline">
+                  <option>day</option>
+                  <option>week</option>
+                  <option>month</option>
+                  <option>year</option>
+                </select></div>at <div class="form-group d-inline ml-2">
+                  <input type="email" class="form-control-inline" id="exampleFormControlInput1" placeholder="hh:mm">
+                </div>
+            </label>
+          </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+        <fieldset class="the-fieldset">
+          <legend class="the-legend">Duration <i class="not-optional"></i></legend>
+          <div class="form-group">
+              <span>Maintance Window Duration</span>
+              <input type="number" class="form-control-inline mx-2" min="1" max="24"> hours
+            </div>
+            <span
+              class="note">Note: value from 1 to 24</span>
+        </fieldset>
+    </div>
+    <div class="col">
+      <fieldset class="the-fieldset">
+          <legend class="the-legend">Stop Initiating Tasks <i class="not-optional"></i></legend>
+          <span>Time to stop startig scheduled task before maintanance window ends</span>
+          <div class="form-group">
+            <input type="number" class="form-control-inline mx-2" min="1" max="23"> hours before the windows closes
+          </div>
+          <span class="note">Note: value from 1 to 23</span>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <fieldset class="the-fieldset">
+          <legend class="the-legend">Window Start Date</legend>
+          <span>Date time to start the  maintanance window</span>
+          <div class="form-group">
+            <input type="date" class="form-control-inline" min="1" max="23">
+            <input type="text" class="form-control-inline mx-2" min="1" max="23" placeholder="hh:mm">
+            <select class="form-control-inline">
+              <option>GMt +0.00</option>
+            </select>
+          </div>
+      </fieldset>
+    </div>
+    <div class="col">
+      <fieldset class="the-fieldset">
+          <legend class="the-legend">Window End Date</legend>
+          <span>Date time to start the  maintanance window</span>
+          <div class="form-group">
+            <input type="date" class="form-control-inline" min="1" max="23">
+            <input type="text" class="form-control-inline mx-2" min="1" max="23" placeholder="hh:mm">
+            <select class="form-control-inline">
+              <option>GMt +0.00</option>
+            </select>
+          </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <fieldset class="the-fieldset">
+          <legend class="the-legend">Scheduled timezone</legend>
+          <span>Timezone applie to window executions, not applied to Start and End dates</span>
+          <div class="form-group">
+            <select class="form-control-inline">
+              <option>UTC/ETC</option>
+            </select>
+          </div>
+          <span class="note">Note: IMAI Time zone</span>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="legend">
+         "<i class="not-optional"></i>" Defines that specific section is not optional.
+      </div>
+    </div>
+  </div>
+  <div class="button-container shadow">
+    <button class="btn btn-outline-secondary">Cancel</button>
+    <button class="btn btn-primary">Schedule</button>
+  </div>
+</div>

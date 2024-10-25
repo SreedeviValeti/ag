@@ -1,0 +1,39 @@
+
+.sign-in-container {
+  .panel {
+    position: absolute;
+    top: 20%;
+    right: 20%;
+    min-height: 450px;
+    width: 350px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 30px;
+    .logo {
+      font-size: 1.75rem;
+      color: #2c76BF;
+      display: inline-block
+    }
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=7, Direction=0, Color=#2C76BF)";/*IE 8*/
+    -moz-box-shadow: 0 0 7px 3px rgba(44,118,191,0.5);/*FF 3.5+*/
+    -webkit-box-shadow: 0 0 7px 3px rgba(44,118,191,0.5);/*Saf3-4, Chrome, iOS 4.0.2-4.2, Android 2.3+*/
+    box-shadow: 0 0 7px 3px rgba(44,118,191,0.5);/* FF3.5+, Opera 9+, Saf1+, Chrome, IE10 */
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=7, Direction=135, Color=#2C76BF); /*IE 5.5-7*/
+  }
+  i.fa {
+    position: absolute;
+    top: 33px;
+  }
+  .form-control {
+    padding-left: 25px;
+  }
+}
+.fixed-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('../../assets/images/bg-image.jpg');
+  z-index: 0;
+}

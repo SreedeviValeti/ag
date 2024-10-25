@@ -1,0 +1,149 @@
+<div class="setup-pillar-container">
+  <async-loader *ngIf="loading"></async-loader>
+  <div class="row">
+    <div class="col">
+      <h2 class="page-heading">Pillar Configuration</h2>
+      <i aria-hidden="true" (click)="createPillar()" ngbTooltip="Create New Pillar" container="body" class="fa fa-plus-circle add-new-big pull-right"></i>
+    </div>
+  </div>
+  <div class="pillar-cards-container" *ngIf="!loading">
+    <div class="row" (click)="expandOrcollapse(pillar, $event)" *ngFor="let pillar of pillarlist">
+      <div class="col">
+        <div class="card pillar">
+          <div class="card-header">
+            <h6 class="mr-3">{{pillar['name']}}</h6>
+
+            <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!pillar.expand" aria-hidden="true" (click)="expandOrcollapse(pillar, $event)"></i>
+            <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="pillar.expand" aria-hidden="true" (click)="expandOrcollapse(pillar, $event)"></i>
+          </div>
+          <div class="cards-container" *ngIf="pillar.expand">
+            <app-inline-loader *ngIf="pillar.envLoading"></app-inline-loader>
+            <div class="row" *ngIf="!pillar.envLoading">
+              <div class="col-3" *ngFor="let env of pillar.environmentsList">
+                <app-inline-loader *ngIf="env.loading"></app-inline-loader>
+                <div class="card shadow" [ngClass]="{'active':!env.disableenv,
+                            'inactive':env.disableenv, 'checking': false}">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col">
+                        <strong *ngIf="!env.edit">
+                          {{env.envName | uppercase}}
+                          <i class="fa fa-check-circle-o running" *ngIf="!env.disableenv" aria-hidden="true"></i>
+                          <i class="fa fa-minus-circle stopped" *ngIf="env.disableenv" aria-hidden="true"></i>
+                        </strong>
+                        <i class="fa fa-pencil ml-3 rem-125 pull-right" (click)="showEditPopup(pillar,env, $event);"
+                          aria-hidden="true" ngbTooltip="Modify  Environment Name" *ngIf="!env.edit"></i>
+                        <i class="fa fa-trash ml-2 rem-125 pull-right" aria-hidden="true" ngbTooltip="Delete the Environment"
+                          *ngIf="!env.edit" (click)="showDeletePopup(pillar,env, $event);"></i>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <td class="border-top-0">Peoples Tools:</td>
+                              <td class="border-top-0">{{ env.peopleTools}}</td>
+                              <!--<td class="border-top-0">{{'' + infraCardVersions.peopleTools}}</td>-->
+                            </tr>
+                            <tr>
+                              <td>Application:</td>
+                              <!--<td>{{prefix}} {{'' + infraCardVersions.application}}</td>-->
+                              <td>{{env.application}}</td>
+                            </tr>
+                            <tr>
+                              <td>Image Update:</td>
+                              <!--<td>{{'' + infraCardVersions.imageUpdate}}</td>-->
+                              <td>{{ env.imageUpdate}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <!-- <button type="button" [disabled]="env.disableenv" [class.disabled]="env.disableenv"
+                            class="btn btn-outline-primary btn-sm ripple" [routerLink]="[env.envID]">View</button> -->
+                    <button type="button" [disabled]="env.disableenv" [class.disabled]="env.disableenv" class="btn btn-outline-secondary btn-sm ripple"
+                      *ngIf="hasEditAccess" [routerLink]="[pillar.id,'edit',env.envID]">Edit</button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="card shadow no-hover">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col">
+                        <strong>
+                          Create Environment
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <i class="fa fa-plus-circle big-add" aria-hidden="true" (click)="openCreateEnvModel(pillar)"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <!--    <div class="col-3">
+                <div class="card shadow no-hover">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col">
+                        <strong>
+                          Create Environment
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <i class="fa fa-plus-circle big-add" aria-hidden="true"
+                          (click)="openCreateEnvModel(pillar)"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="popup-container modal-md" *ngIf="isDelPopupShow">
+    <div class="popup-header">
+      <a class="close" (click)="isDelPopupShow = false"><i class="fa fa-times" aria-hidden="true"></i></a>
+    </div>
+    <div class="popup-body">
+      <div class="warning-content">
+        <div class="row">
+          <div class="col">
+            <h3>{{'Delete'}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p>Do you really want to delete  {{this.selectedEnv.envName}} ?</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-secondary" (click)="isDelPopupShow = false">Cancel</button>
+            <button class="btn btn-primary" (click)="deleteEnvironment()">Ok</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

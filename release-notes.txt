@@ -1,0 +1,46 @@
+v2.1.0:release-notes.txt
+Assessment:To capture client onboarding data
+Infrastructure Metrics:Displays Infrastructure Metrics Dashboard in AG
+Application Metrics:Displays Application Metrics Dashboard in AG
+SecurityHub Findings:Displays the Security Hub Findings in AGMigration:Deploys the Scalr setup required for deploying Terraform infrastructure for Peoplesoft/Ebiz
+ServiceTickets:Fetches the Tickets from ServiceNow for a particular client idMigration:Download and retention of Oracle Patches 
+about ActiveGenie:Displays the client name and AG versionMigration:Install Peoplesoft App Home 
+Splashpage:Displays the list of Peoplesoft environments/NotificationsMigration:Installs Peoplesoft PSHOME
+Peoplesoft Inventory:Displays the list of Oracle patches downloaded/list of ami built/list of Pshomes/psapphomes builtMigration:Create Peoplesoft images for environment build which includes OS Patching and Security hardening 
+	
+Environment Management:Set Log retention Policies based on prod/nprd
+Environment Management:Automatic discovery of all Peoplesoft Environments
+Environment Management:Automatic discovery of Information from each Peoplesoft component
+Environment Management:Displays the list of Scheduled Activities for an environment
+Environment Management:Password Manager	Displays the usernames/passwords(masked) for an environment
+Environment Management:Schedule Invocation of AutoScaling Instance Refresh to achieve Blue/Green Deployment
+Environment Management:Scheduled/adhoc invocation of Clear Cache for Peoplesoft components
+Environment Management:Scheduled/adhoc invocation of Bounce PIA components like app/web/prcs
+Environment Management:Scheduled/adhoc invocation of load cache on Peoplesoft Application Server 
+Environment Management:Schedule Scaling	Sets schedules to increase/decrease environment capacity for Peoplesoft environments
+Environment Management:Scheduled/adhoc invocation of  Stop/start of Peoplesoft environments to save on billing costs
+Environment Management:Scheduled/adhoc invocation of  url login to Peoplesoft environment with automatic notification system
+Environment Management:Automatic increase/decrease in capacity to handle peak load situations by monitoring weblogic loads
+	
+Infrastructure automation:Automatic addition/deletion of EC2 Instance metrics/Alarms for creation and deletion of Instances
+Infrastructure automation:Automatic addition/deletion of RDS Instance metrics/Alarms for creation and deletion of RDS Instances
+Infrastructure automation:Optional deployment and configuration of WAF(Web Application Firewall) 
+Infrastructure automation:WAF with a provision to whlitelist/Blacklist of certain IP addresses  of customer's choice
+Infrastructure automation:Complete isolation of Infrastructure components between prod/nprd
+Infrastructure automation:Ability to Host prod/nprd environments in a single vpc/Separate vpcs or split across AWS accounts
+Infrastructure automation:Ability to deploy different WAF configurations for prod/nprd
+Infrastructure automation:Automatic sync of VPC flow logs/ALB  logs/Application logs a dedicated logging account
+Infrastructure automation:Automatic creation of Scalr setup to deploy Infrastructure automation
+Infrastructure automation:Automated Release and deployment of new versions to ActiveGenie
+Infrastructure automation:Ability to deploy/integrate Peoplesoft infrastructure into an existing client AWS account
+Infrastructure automation:Complete isolation per each Peoplesoft environment
+Infrastructure automation:Role Based Access control with fine grained access control
+Infrastructure automation:Automatic creation of dedicated set of passwords between prod/nprd
+Infrastructure automation:Automated Peoplesoft Application build with all Peoplesoft configurations controlled by a Peoplesoft Admin
+Infrastructure automation:Environment build with the following options
+			 :Option1: Web-app-psunx deployment on a single EC2 instance
+			 :Option2: High Availability deployment with Web-app on one Instance/psunx/Intbrk deployment on dedicated instances
+			 :Option3: High Availability deployment with Web/app/psunx/Intbrk deployment to dedicated instances, with the ability to automatically sync psserver strings  between web and app
+			 :option4: High Availability deployment with an option to switch between ALB/CLB 
+Infrastructure automation:Ability to stage the configuration changes and deploy during the maintenance window
+Infrastructure automation:Automatic capture of EC2/application logs to a log bucket on a daily basis and before EC2 termination

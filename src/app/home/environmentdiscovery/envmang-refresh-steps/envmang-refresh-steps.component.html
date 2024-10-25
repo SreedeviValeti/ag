@@ -1,0 +1,32 @@
+<div class="steps-container">
+    <async-loader *ngIf="loading"></async-loader>
+    <div class="row">
+        <div class="col text-right">
+            <span class="pos-rel" (clickOutside)="onClickedOutside($event)">
+                <a class="upload-icon icons"  (click)="showUpload = !showUpload"></a>
+                <div class="upload-popover-container" *ngIf="showUpload" >
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="file-upload">
+                                <h3>Please Upload Environment Details</h3>
+                                <input type="file" #fileUpload id="myFile" name="filename"
+                                (change)="onFileChange($event)" #fileInput>
+                                <button class="btn btn-primary float-right" (click)="requestUpload($event)">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                    <i></i>
+                </div>
+            </span>
+            <span class="vertical-separator big"></span>
+            <a id="downloadAnchorElem" style="display:none"></a>
+            <a class="download-icon icons" ngbTooltip="Download Steps" (click)="downloadFile()"></a>
+            <ng-template ngFor let-view [ngForOf]="views">
+                <span class="vertical-separator big"></span>
+                <a class="icons {{view}}" alt="View" [ngbTooltip]="view" [ngClass]="{'selected':selectedView === view}"
+                    (click)="showSelectedView(view)"></a>
+                <span *ngIf="!last" class="vertical-separator big"></span>
+            </ng-template>
+        </div>
+    </div>
+</div>

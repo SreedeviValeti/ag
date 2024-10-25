@@ -1,0 +1,128 @@
+<div>
+  <div class="modal-header">
+    <h4 class="modal-title">{{heading}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="scheduler-container">
+      <div class="row mb-2">
+        <div class="col">
+          <section class="mat-typography demo-container">
+
+            <h1>Cron Expression Editor</h1>
+
+            <mat-card class="demo-card">
+              <mat-card-header class="demo-card-header">
+
+                <mat-card-title>
+                  Select your cron flavor
+                </mat-card-title>
+                <div>
+                  <mat-form-field>
+                    <mat-label>Flavor</mat-label>
+                    <mat-select (change)="cronFlavorChange()" [(ngModel)]="cronOptions.cronFlavor">
+                      <mat-option [value]="'quartz'">
+                        Quartz
+                      </mat-option>
+
+                      <mat-option [value]="'standard'">
+                        Standard
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </mat-card-header>
+
+              <mat-card-content class="demo-card-content">
+                <form>
+                  <cron-editor #cronEditorDemo [formControl]="cronForm" [options]="cronOptions">Cron here...
+                  </cron-editor>
+                </form>
+                <div class="row">
+                  <div  class="col-4">
+                    <h3>
+                      <b>Created Expression: {{cronForm?.value}}</b>
+                    </h3>
+                  </div>
+                  <div class="col-4">
+                    <button type="button" class="btn btn-secondary mr-2" (click)="resetCron()">Reset</button>
+                    <button type="button" class="btn btn-primary" (click)="applyCron()">Apply</button>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </section>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col">
+          <fieldset class="the-fieldset">
+            <legend class="the-legend">Actual Expression</legend>
+            <div class="form-group">
+              <div>
+                <h3>
+                  <b> {{scheduleEditObj.cronExp}}</b>
+                </h3>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col">
+          <fieldset class="the-fieldset">
+            <legend class="the-legend">Enable</legend>
+            <div class="form-group">
+              <div class="toggle-selection">
+
+                <label class="switch">
+                  <input type="checkbox" [(ngModel)]="scheduleEditObj.enabled">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col">
+          <fieldset class="the-fieldset">
+            <legend class="the-legend">Window Start Date</legend>
+            <span>Date time to start the refresh window</span>
+            <div class="form-group">
+              <input type="date" [(ngModel)]="scheduleEditObj.startDate" name="startDate" id='start'
+                class="form-control-inline">
+              <input type="time" [(ngModel)]="scheduleEditObj.startTime" name="startTime"
+                class="form-control-inline mx-2" min="1" max="23" placeholder="hh:mm">
+
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="row mb-2">
+        <div class="col">
+          <fieldset class="the-fieldset">
+            <legend class="the-legend">Window End Date</legend>
+            <span>Date time to End the refresh window</span>
+            <div class="form-group">
+              <input type="date" name="endDate" class="form-control-inline" min="1" max="23"
+                [(ngModel)]="scheduleEditObj.endDate">
+              <input type="time" name="endTime" class="form-control-inline mx-2" min="1" max="23" placeholder="hh:mm"
+                [(ngModel)]="scheduleEditObj.endTime">
+
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="validateForm()">Save</button>
+  </div>
+</div>

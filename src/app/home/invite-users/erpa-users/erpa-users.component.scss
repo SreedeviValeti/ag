@@ -1,0 +1,30 @@
+.create-container {
+    padding: 20px;
+    background-color: white;
+    .add-icon {
+        font-size: 1.75rem;
+        line-height: 69px;
+        cursor: pointer;
+        color: primary;
+    }
+    .line-height-30 {
+        line-height: 30px !important;
+        margin-left: 10px;
+    }
+    .line-height-20 {
+        line-height: 20px !important;
+        margin-left: 10px;
+    }
+    .card+.card {
+        margin-top: 0.5rem;
+    }
+    .card-body-table {
+        transition: all 333ms linear 333ms;
+        background-color: transparent;
+        line-height: 1;
+        padding: 1rem;
+    }
+    .clickable {
+        cursor: pointer;
+    }
+}

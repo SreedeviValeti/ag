@@ -1,0 +1,18 @@
+<async-loader *ngIf="loading"></async-loader>
+<table  style="margin-top: 10px;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+      <th mat-header-cell *matHeaderCellDef style="padding-left: 10px;color: black; font-weight: bold;border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px; "> {{column}} </th>
+      <div  *ngIf = "column == 'LoginUrl'">
+      <td  mat-cell *matCellDef="let element" style="border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;"> <a  href={{element[column]}}  target="_blank">{{element[column]}}</a>
+      </td>
+      </div>
+      <div  *ngIf = "column == 'Status'">
+        <td class="fa " [ngClass]="{'running fa-play-circle': element[column] == 'Running', 'stopped fa-stop-circle':element[column] == 'Stopped'}" mat-cell *matCellDef="let element" style="text-align: center; padding-left: 0px ; border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;"> {{element[column]}} 
+        </td>
+      </div>
+      <td mat-cell *matCellDef="let element" style="text-align: center; padding-left: 0px ; border-left-style: solid;border-left-width: 1px;border-right-style: solid;border-right-width: 1px;"> {{element[column]}} </td>
+    </ng-container>
+  
+    <tr mat-header-row style="height: 36px;" *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row  style="height: 36px;" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>

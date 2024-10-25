@@ -1,0 +1,77 @@
+<async-loader *ngIf="loading"></async-loader>
+<div class="row">
+    <div class="col-6">
+        <h5 class="tab-title">Load Cache</h5>
+    </div>
+ 
+</div>
+<div class="row">
+    <div class="col-8">
+        <p class="mt-1 mb-2 gray-text">Last loadcache on <b>{{lastLoadCacheDateTime}}</b></p>
+    </div>
+</div>
+
+<div class="row mt-4" *ngIf = "scheduled">
+    <div class="col-6">
+        <h5 class="tab-title">Current Refresh Policy</h5>
+    </div>
+    <div class="col-2 text-right">
+    </div>
+    <div class="col-8">
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td style="padding:10px;width:130px;"><b>Start Date :</b></td>
+                <td style="padding:10px;font-size:smaller;">{{toUTCFormat(scheduleInfo['StartDate'])}}</td>
+                <td style="padding:10px;"><b>End Date :</b></td>
+                <td style="padding:10px;font-size:smaller;">{{toUTCFormat(scheduleInfo['EndDate'])}}</td>
+            </tr>
+            <tr>
+                <td style="padding:10px;width:130px;"><b>Schedule Info:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{scheduleInfo['Schedule']}}</td>
+                <td style="padding:10px;"><b>Next Refresh Date :</b></td>
+                <td style="padding:10px;font-size:smaller;">{{toUTCFormat(scheduleInfo['NextExecutionTime'])}}</td>
+            </tr>
+            <tr>
+                <td style="padding:10px;width:130px;"><b>Maintenance Duration:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{scheduleInfo['Duration']}}Hours</td>
+                <td style="padding:10px;"><b>Enabled:</b></td>
+                <td style="padding:10px;font-size:smaller;">
+                  <div class="form-group">
+                    <div class="toggle-selection">
+                    
+                      <label class="switch">
+                        <input type="checkbox" disabled="disabled"  [(ngModel)]="scheduleInfo.Enabled">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+
+ <div class="row mt-4">
+            <div class="col-2 text-center">
+                <button class="btn btn-outline-primary"
+                (click)="enableRefreshModal();"
+  [ngClass]="{'disabled':disableRefreshButtonFlag}" >
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                 Load Cache </button>
+            </div>
+            <div class="col-3 text-center">
+                <button class="btn btn-outline-primary"
+                (click)="openModal()">
+                <i class="fa fa-refresh" aria-hidden="true"></i>
+                Edit Load Cache Policy</button>
+            </div>
+  </div>
+  

@@ -1,0 +1,261 @@
+<async-loader *ngIf="loading"></async-loader>
+<div class="create-container"  *ngFor=" let app of env">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header clickable">
+          <div class="row">
+            <div class="col-11">
+              <span style="color: darkblue;font-weight: bold;">
+                DATABASE
+              </span>
+            </div>
+            <div class="col-1 text-right">
+              <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.toggleApp" aria-hidden="true" (click)="toggleApp(app.database)"></i>
+              <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.toggleApp" aria-hidden="true" (click)="toggleApp(!app.database)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="app.database.toggleApp">
+          <div class="row" >
+            <div class="col" >
+              <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor="let key of objectKeys(app.database)">
+                      <td>{{key}}
+
+                    </td>  
+                    <td>{{app.database[key]}}
+                      </td>
+            
+                          </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header clickable">
+          <div class="row">
+            <div class="col-11">
+              <span style="color: darkblue;font-weight: bold;">
+                Integration Broker
+              </span>
+            </div>
+            <div class="col-1 text-right">
+              <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.toggleIB" aria-hidden="true" (click)="toggleIB(app.IB)"></i>
+              <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.toggleIB" aria-hidden="true" (click)="toggleIB(app.IB)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="app.IB.toggleIB">
+          <div class="row" >
+            <div class="col" >
+              <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor="let key of objectKeys(app.IB)">
+                      <td>{{key}}
+
+                    </td>  
+                    <td> {{app.IB[key]}}</td>            
+                          </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header clickable">
+          <div class="row">
+            <div class="col-11">
+              <span style="color: darkblue;font-weight: bold;">
+                Process Scheduler
+              </span>
+            </div>
+            <div class="col-1 text-right">
+              <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.togglePRCS" aria-hidden="true" (click)="togglePRCS(app.prcs)"></i>
+              <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.togglePRCS" aria-hidden="true" (click)="togglePRCS(app.prcs)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="app.prcs.togglePRCS">
+          <div class="row" *ngFor=" let prcs of app.prcs" >
+            <div class="col" >
+              <div class="card">
+                <div class="card-header clickable">
+                  <div class="row">
+                    <div class="col-11">
+                      <span>
+                        {{prcs.InstanceId}} | {{prcs.PrivateIp}}
+                      </span>
+            </div>
+            <div class="col-1 text-right">
+                <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.PRCSServer" aria-hidden="true" (click)="PRCSServer(app.prcs)"></i>
+                <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.PRCSServer" aria-hidden="true" (click)="PRCSServer(app.prcs)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="app.prcs.PRCSServer">
+            <div class="row">
+              <div class="col" >
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor="let key of objectKeys(prcs)">
+                      <td>{{key}}
+                      </td>     
+                      <td>{{prcs[key]}}
+                      </td>                       
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header clickable">
+          <div class="row">
+            <div class="col-11">
+              <span style="color: darkblue;font-weight: bold;">
+                Web Servers
+              </span>
+            </div>
+            <div class="col-1 text-right">
+                <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.toggleweb" aria-hidden="true" (click)="toggleweb(app.web)"></i>
+                <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.toggleweb" aria-hidden="true" (click)="toggleweb(app.web)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="app.web.toggleweb">
+          <div class="row" *ngFor=" let web of app.web" >
+            <div class="col" >
+              <div class="card">
+                <div class="card-header clickable">
+                  <div class="row">
+                    <div class="col-11">
+                      <span>
+                        {{web.InstanceId}} | {{web.PrivateIp}}
+                      </span>
+            </div>
+            <div class="col-1 text-right">
+                <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.webServer" aria-hidden="true" (click)="webServer(app.web) "></i>
+                <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.webServer" aria-hidden="true" (click)="webServer(app.web) "></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="app.web.webServer">
+            <div class="row"  >
+              <div class="col"  >
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor="let key of objectKeys(web)">
+                      <td>{{key}}
+                      </td> 
+                      <td>{{web[key]}}
+                      </td>             
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header clickable">
+          <div class="row">
+            <div class="col-11">
+              <span style="color: darkblue;font-weight: bold;">
+                App Servers
+              </span>
+            </div>
+            <div class="col-1 text-right">
+                <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.toggleapp" aria-hidden="true" (click)="toggleapp(app.app)"></i>
+                <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.toggleapp" aria-hidden="true" (click)="toggleapp(app.app)"></i>
+            </div>
+          </div>
+          <div class="card-body" *ngIf="app.app.toggleapp">
+          <div class="row" *ngFor=" let apps of app.app" >
+            <div class="col"   >
+              <div class="card"   >
+                <div class="card-header clickable">
+                  <div class="row">
+                    <div class="col-11">
+                      <span>
+                        {{apps.InstanceId}} | {{apps.PrivateIp}}
+                      </span>
+            </div>
+            <div class="col-1 text-right">
+                <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!app.appServer" aria-hidden="true" (click)="appServer(app.app)"></i>
+                <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="app.appServer" aria-hidden="true" (click)="appServer(app.app)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="app.app.appServer">
+            <div class="row"  >
+              <div class="col" >
+                <table class="table" >
+                  <tbody>
+                    <tr *ngFor="let key of objectKeys(apps) i as index">
+                      <td>{{key}}
+                    </td> 
+                    <td>{{apps[key]}}
+                  </td>             
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>
+        <!-- <div class="card-body" *ngIf="app.toggleApp"></div> -->
+    
+    </div>
+  </div>
+  </div>

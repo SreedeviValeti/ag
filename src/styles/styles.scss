@@ -1,0 +1,18 @@
+@import "_reset";
+@import "_normalize";
+@import "_variables";
+@import "_form-overrides";
+@import "_commons";
+
+html, body {
+  background: $white;
+  color: $secondary-color;
+}
+
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+  z-index: 10000 !important;
+  }
+
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import "../../node_modules/font-awesome/css/font-awesome.css";
+@import "../../node_modules/css-ripple-effect/dist/ripple.min.css";

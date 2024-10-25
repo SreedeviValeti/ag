@@ -1,0 +1,20 @@
+<form >
+    <async-loader *ngIf="loading">Deleting...</async-loader>
+    <div class="modal-header">
+        <h4 class="modal-title">Delete </h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col">
+                <p>{{message}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancel</button>
+        <button type="submit" class="btn btn-primary"  (click)="onSave()">Submit</button>
+    </div>
+</form>

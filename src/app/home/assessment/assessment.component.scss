@@ -1,0 +1,16 @@
+@import "../../../styles/_variables";
+
+.assessment-container {
+  padding: 10px 0;
+  .graph-container {
+    background-color: $gray-200;
+    width: 100%;
+    min-height: 450px;
+    padding: 10px 0px;
+    border-radius: 0 0 10px 8px;
+  }
+  .no-right-padding{
+    padding-right: 0px!important;
+  }
+}
+

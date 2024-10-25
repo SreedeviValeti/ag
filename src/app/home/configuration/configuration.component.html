@@ -1,0 +1,525 @@
+<div class="dashboard-container">
+  <div class="row">
+    <div class="col">
+      <h2 class="page-heading">Configuration Page</h2>
+      <!--<p>configuration works!</p>-->
+    </div>
+  </div>
+  <div class="row" style="margin-right:0px;margin-left:0px;">
+      <div class="card" style="width:50%;border:2px solid #2c76BF;margin:3px;" *ngFor="let envname of data.environments">
+         <div class="card-header">{{envname.name | uppercase}}</div>
+           <div class="card-body">
+                <div class="row" > <!--style="border:1px solid black;" border-right:1px solid black;-->
+                    <div class="col-4" style="background-color:#C1EAEA;padding-top:30px;padding-bottom:30px;">
+                        <button class="m-btn btn btn-sm btn-info" style="font-size: 14px;font-weight: 600;width: 160px;text-align: left;font-size:13px;" 
+                        (click)="enablelogWindowmodal()">Logfile Management</button>
+                    </div>
+                    <div class="col-4">    <!--style="border-right:1px solid black;"-->
+                       <strong>Up Time Policy:</strong>
+                       <p style="margin-bottom: 0.5rem;">Working Hours</p>
+                       <button class="m-btn btn btn-sm btn-info" style="font-size: 14px;font-weight: 600;width: 130px;text-align: left;font-size:13px;" 
+                       (click)="uptimeScheduleUpdate()">Up Time Policy</button>
+                    </div>
+                    <div class="col-4" 
+                    style="background-color:#C1EAEA;padding-top:30px;padding-bottom:30px;padding-left:35px;padding-right:35px;">
+                        <button class="m-btn btn btn-sm btn-info" style="font-size: 14px;font-weight: 600;width: 110px;text-align: left;font-size:13px;" 
+                        (click)="enablerecycleNowWindow()">Recycle Now</button>
+                    </div>
+                </div>
+                
+                <div class="row" >
+                  <!--style="border-left:1px solid black;border-right:1px solid black;" border-right:1px solid black; -->
+                    <div class="col-4" style="padding-top:5px;padding-bottom:5px;">
+                        <strong>Last Back Up</strong>
+                        <p>12-Oct-2020</p>
+                        <button class="m-btn btn btn-sm btn-info" 
+                        style="font-size: 14px;font-weight: 600;width: 160px;height:50px;text-align: left;font-size:13px;" 
+                        (click)="enableBackUpConfigWindow()">Back Up Configuration</button>
+                    </div>
+                    <div class="col-4" style="background-color:#C1EAEA;padding-top:5px;"><!--border-right:1px solid black;-->
+                       <strong>Back Up Policy </strong>
+                       <p >{{envname.refresh_policy}}</p>
+                       <button class="m-btn btn btn-sm btn-info" style="font-size: 14px;font-weight: 600;width: 130px;text-align: left;font-size:13px;" 
+                       (click)="backUpPolicyUpdate()">Back Up Policy </button>
+                    </div>
+                    <div class="col-4" style="padding-top:55px;padding-bottom:55px;padding-left:33px;padding-right:32px;">
+                        <button class="m-btn btn btn-sm btn-info" style="font-size: 14px;font-weight: 600;width: 120px;text-align: left;font-size:13px;" 
+                       (click)="enablebackUpNowWindow()">Back Up Now</button>
+                    </div>
+                </div>
+                
+                <div class="row" >      <!--style="border:1px solid black;" border-right:1px solid black;-->
+                    <div class="col-4" 
+                    style="background-color:#C1EAEA;padding-top:5px;padding-bottom:5px;">
+                        <strong>Last Refresh</strong>
+                        <p>12-Oct-2020</p>
+                        <button class="m-btn btn btn-sm btn-info" 
+                        style="font-size: 14px;font-weight: 600;width: 160px;height:50px;text-align: left;font-size:13px;" 
+                        (click)="enableRefreshConfigWindow()">Refresh Configuration</button>
+                    </div>
+                    <div class="col-4" style="padding-top:5px;"><!--border-right:1px solid black;-->
+                       <strong>Refresh Policy:</strong>
+                       <p>Bi-Weekly</p>
+                       <button class="m-btn btn btn-sm btn-info" style="font-size: 14px;font-weight: 600;width: 130px;text-align: left;font-size:12px;" 
+                       (click)="refreshPolicyUpdate()">Refresh Policy</button>
+                    </div>
+                    <div class="col-4" 
+                    style="background-color:#C1EAEA;padding-top:50px;padding-bottom:50px;padding-left:33px;padding-right:32px;">
+                        <button class="m-btn btn btn-sm btn-info" style="font-size: 14px;font-weight: 600;width: 110px;text-align: left;font-size:12px;" 
+                       (click)="enablerefreshNowWindow()">Refresh Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="logfileWindow">
+  <div class="popup-header">
+    <strong>Set Log File Retention Policy (No. Of Days)</strong>
+    <a class="close" (click)="disableLogFile()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <div class="modal-body">
+          <div class="ui-g" style="margin-bottom:10px">
+                <span style="padding-left: 190px;width: 292px;padding-right:20px;">Archive After </span> 
+                <span style="width: 90px;">Purge After </span> 
+          </div>
+          <div class="ui-g" style="margin-bottom:10px">
+                <span style="padding-right:99px;">App Server Logs</span>                      
+                <input type="text"  style="width:50px;margin-right:50px;"  />
+                <input type="text"  style="width:50px;"  />
+          </div>
+          <div class="ui-g" style="margin-bottom:10px">
+                <span style="padding-right:96px;">Web Server Logs</span>                      
+                <input type="text"  style="width:50px;margin-right:50px;" pInputText />
+                <input type="text"  style="width:50px;" pInputText />
+          </div>
+          <div class="ui-g" style="margin-bottom:10px">
+                <span style="padding-right:87px;">Batch Server Logs</span>                      
+                <input type="text" style="width:50px;margin-right:50px;" pInputText />
+                <input type="text" style="width:50px;" pInputText />
+          </div> 
+          <div class="ui-g" style="margin-bottom:10px">
+                <span style="padding-right:113px;">IB Server Logs</span>                      
+                <input type="text" style="width:50px;margin-right:50px;" pInputText />
+                <input type="text" style="width:50px;" pInputText />
+          </div>
+          <div class="ui-g" style="margin-bottom:10px">
+                <span style="padding-right:105px;">DB Server Logs</span>                      
+                <input type="text" style="width:50px;margin-right:50px;" pInputText />
+                <input type="text" style="width:50px;" pInputText />
+          </div>
+      </div>
+     <!--<div class="ui-g" style="padding-left: 20%;margin-bottom:10px;">-->
+        <!--      <div class="ui-g-12" style="padding-left:0px;">-->
+        <!--        <input type="radio" id="manual" value="manual"/><label for="manual" style="margin-right: 100px;" >Manual</label>-->
+        <!--      </div>-->
+        <!--      <div class="ui-g-12" style="padding-left:0px;">-->
+        <!--        <input type="radio" id="nightly" value="nightly"><label for="nightly" style="margin-right: 101px;" >Nightly</label>-->
+        <!--      </div>-->
+        <!--      <div class="ui-g-12" style="padding-left:0px;">-->
+        <!--        <input type="radio" id="weekly" value="weekly"><label for="weekly" style="margin-right: 101px;">Weekly</label>-->
+        <!--      </div>-->
+        <!--      <div class="ui-g-12" style="padding-left:0px;">-->
+        <!--        <input type="radio" id="monthly" value="monthly"><label for="monthly" style="margin-right: 93px;">Monthly</label>-->
+        <!--      </div>-->
+        <!--</div>-->
+     <!-- <div class="row">
+        <div class="col">
+          <p> Are you sure you want to reschedule the domain?</p>
+        </div>
+      </div>-->
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="disableLogFile()">Cancel</button>
+        <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="backUpConfigWindow">
+  <div class="popup-header">
+    <strong>EDIT BACKUP CONFIGURATION</strong>
+    <a class="close" (click)="disableBackUpConfigWindow()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <p style="font-weight: 500;">Back Up Type :</p>
+        <div class="ui-g" style="padding-left: 20%;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="fullStack" name="backUpType" value="fullStack"/>
+                <label for="fullStack" style="margin-right: 100px;" >Full Stack</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="dBOnly" name="backUpType" value="dBOnly">
+                <label for="dBOnly" style="margin-right: 101px;" >DB Only</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="appConfigOnly" name="backUpType" value="appConfigOnly">
+                <label for="appConfigOnly" style="margin-right: 101px;">App Config Only</label>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disableBackUpConfigWindow()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="refreshConfigWindow">
+  <div class="popup-header">
+    <strong>EDIT REFRESH CONFIGURATION</strong>
+    <a class="close" (click)="disableRefreshConfigWindow()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <div style="margin-bottom:15px;">Source :&nbsp;  
+        <!--<p-dropdown [options]="environmentsList" optionLabel="name" [style]="{'width':'166px'}"></p-dropdown>-->
+        <select><option *ngFor="let x of envlist">{{x}}</option></select>
+      </div>
+      <div style="margin-bottom:15px;">Target &nbsp;:&nbsp;
+       <input type="text" value="testword" disabled/>
+      </div>
+      <p style="font-weight: 500;">Refresh Type :</p>
+        <div class="ui-g" style="width:250px;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="fullStack" name="refreshType" value="fullStack"/>
+                <label for="fullStack" style="margin-right: 100px;" >Full Stack</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="dBOnly" name="refreshType" value="dBOnly"/>
+                <label for="dBOnly" style="margin-right: 101px;" >DB Only</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="appConfigOnly" name="refreshType" value="appConfigOnly"/>
+                <label for="appConfigOnly" style="margin-right: 101px;">App Config Only</label>
+              </div>
+        </div>
+        <div class="ui-g" style="width:500px;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="prepostRefreshTasks" value="prepostRefreshTasks"/>
+                <label for="prepostRefreshTasks" style="margin-right: 100px;" >Perform Pre/Post Refresh Tasks</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="piaConfig" value="piaConfig">
+                <label for="piaConfig" style="margin-right: 101px;" >Preserve Target PIA Config</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="preserveTargetSecurity" value="preserveTargetSecurity">
+                <label for="preserveTargetSecurity" style="margin-right: 101px;">Preserve Target Security</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="makeSensitiveData" value="makeSensitiveData">
+                <label for="makeSensitiveData" style="margin-right: 101px;">Mask Sensitive Data</label>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disableRefreshConfigWindow()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="enableuptimeSchedulel">
+  <div class="popup-header">
+    <strong>Modify Up Time Policy</strong>
+    <a class="close" (click)="disableuptimeSchedule()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <p>Pick a schedule to run the application.</p>
+          <div class="ui-g" style="width:250px;margin-bottom:10px">
+              <div class="ui-g-12" style="padding-left:10px;">
+                <input type="radio" id="Week Days" name="upTimePolicy" value="Week Days"><label for="Week Days">Week Days</label><br>
+              </div>
+              <div class="ui-g-12" style="padding-left:10px;">
+                <input type="radio" id="Working Hours" name="upTimePolicy" value="Working Hours"><label for="Working Hours">Working Hours</label><br>
+              </div>
+              <div class="ui-g-12" style="padding-left:10px;">
+                <input type="radio" id="Always"name="upTimePolicy" value="Always"><label for="Always">Always</label><br>
+              </div>
+          </div>
+     <!-- <div class="row">
+        <div class="col">
+          <p> Are you sure you want to reschedule the domain?</p>
+        </div>
+      </div>-->
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disableuptimeSchedule()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+       </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="enableBackupPolicyWindow">
+  <div class="popup-header">
+    <strong>Modify Back Up Policy</strong>
+    <a class="close" (click)="disableBackupPolicy()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <p style="font-weight: 500;">Pick a backup policy :</p>
+      <!--<span><h4 style="font-size: 15px;font-weight: 400;padding-left: 20%;padding-right:140px;">Full</h4></span>-->
+      <!--<span style="font-size: 15px;font-weight: 400;">Incremental</span>-->
+      <span style="padding-right: 140px;padding-left: 20%;font-size: 15px;font-weight: 400;"><strong>Full</strong></span>
+      <span style="font-size: 15px;font-weight: 400;"><strong>Incremental</strong></span>
+      
+        <div class="ui-g" style="padding-left: 20%;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="manual" name="backUpPolicyFull" value="manual"/>
+                <label for="manual" style="margin-right: 100px;" >Manual</label>
+                <input type="radio" id="never" name="backUpPolicyInc" value="never"/>
+                <label for="never">Never</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="nightly" name="backUpPolicyFull"value="nightly"/>
+                <label for="nightly" style="margin-right: 101px;" >Nightly</label>
+                <input type="radio" id="nightlyInc" name="backUpPolicyInc" value="nightlyInc"/>
+                <label for="nightlyInc">Nightly</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="weekly" name="backUpPolicyFull"value="weekly"/>
+                <label for="weekly" style="margin-right: 101px;">Weekly</label>
+                <input type="radio" id="weeklyInc" name="backUpPolicyInc" value="weeklyInc"/>
+                <label for="weeklyInc">Weekly</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="monthly" name="backUpPolicyFull"value="monthly"/>
+                <label for="monthly" style="margin-right: 93px;">Monthly</label>
+                <input type="radio" id="monthlyInc" name="backUpPolicyInc" value="monthlyInc"/>
+                <label for="monthlyInc">Monthly</label>
+              </div>
+        </div>
+        <div class="ui-g" style="padding-top:20px;">
+                Backup Retention (# of days) : <input type="text" value="30"  style="width:50px;margin-left:10px;" />
+        </div>
+     <!-- <div class="row">
+        <div class="col">
+          <p> Are you sure you want to reschedule the domain?</p>
+        </div>
+      </div>-->
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disableBackupPolicy()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="enableRefreshPolicyWindow">
+  <div class="popup-header">
+    <strong>Modify Refresh Policy</strong>
+    <a class="close" (click)="disableRefreshPolicy()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <p style="font-weight: 500;">Pick a Refresh policy :</p>
+      <!--<span><h4 style="font-size: 15px;font-weight: 400;padding-left: 20%;padding-right:140px;">Full</h4></span>-->
+      <!--<span style="font-size: 15px;font-weight: 400;">Incremental</span>-->
+      <span style="padding-right: 140px;padding-left: 20%;font-size: 15px;font-weight: 400;"><strong>Full</strong></span>
+      
+        <div class="ui-g" style="padding-left: 20%;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="manual" name="refreshPolicy" value="manual"/>
+                <label for="manual" style="margin-right: 100px;" >Manual</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="nightly" name="refreshPolicy" value="nightly"/>
+                <label for="nightly" style="margin-right: 101px;" >Nightly</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="weekly" name="refreshPolicy" value="weekly"/>
+                <label for="weekly" style="margin-right: 101px;">Weekly</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="monthly" name="refreshPolicy" value="monthly"/>
+                <label for="monthly" style="margin-right: 93px;">Monthly</label>
+              </div>
+        </div>
+        <!--<div class="ui-g" style="padding-top:20px;">-->
+        <!--        Backup Retention (# of days) : <input type="text" value="30"  style="width:50px;margin-left:10px;" />-->
+        <!--</div>-->
+        <!-- <div class="row">
+        <div class="col">
+          <p> Are you sure you want to reschedule the domain?</p>
+        </div>
+      </div>-->
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disableRefreshPolicy()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="recycleNowWindow">
+  <div class="popup-header">
+    <strong>Select the Servers to bounce</strong>
+    <a class="close" (click)="disablerecycleNowWindow()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <span style="font-weight: 500;">Bounce Type :</span>
+        <div class="ui-g" style="width:250px;margin-bottom:25px;padding-top: 10px;">
+          <input type="radio" id="parallelBounce" value="parallelBounce"/>
+          <label for="parallelBounce" style="margin-right: 120px;" >Parallel Bounce</label>
+          <input type="radio" id="rollingBounce" value="rollingBounce" style="margin-left: 20px;"/>
+          <label for="rollingBounce" >Rolling Bounce</label>
+          
+            <!--<p-radioButton [(ngModel)]="bounceType" value="Parallel Bounce" label="Parallel Bounce" inputId="opt1" ></p-radioButton>-->
+            <!--<p-radioButton [(ngModel)]="bounceType" value="Rolling Bounce" [style]="{'padding-left':'15px'}" label="Rolling Bounce" inputId="opt2"></p-radioButton>-->
+        </div>
+      
+      <!--<p style="font-weight: 500;">Bounce Type-1 :</p>-->
+        <!--<div class="ui-g" style="width:250px;margin-bottom:10px;">-->
+        <!--      <div class="ui-g-12" style="padding-left:0px;">-->
+        <!--        <input type="radio" id="fullStack" value="fullStack"/><label for="fullStack" style="margin-right: 100px;" >Full Stack</label>-->
+        <!--      </div>-->
+              
+        <!--      <div class="ui-g-12" style="padding-left:0px;">-->
+        <!--        <input type="radio" id="dBOnly" value="dBOnly"><label for="DB Only" style="margin-right: 101px;" >DB Only</label>-->
+        <!--      </div>-->
+              
+        <!--      <div class="ui-g-12" style="padding-left:0px;">-->
+        <!--        <input type="radio" id="appConfigOnly" value="appConfigOnly"><label for="weekly" style="margin-right: 101px;">App Config Only</label>-->
+        <!--      </div>-->
+        <!--</div>-->
+        <p style="font-weight: 500;">Refresh Type :</p>
+        <div class="ui-g" style="width:500px;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="piaServer" value="piaServer"/>
+                <label for="piaServer" style="margin-right: 100px;" >PIA Server</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="ibServer" value="ibServer">
+                <label for="ibServer" style="margin-right: 101px;" >IBServer</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="batchServer" value="batchServer">
+                <label for="batchServer" style="margin-right: 101px;">Batch Server</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="database" value="database">
+                <label for="database" style="margin-right: 101px;">Database</label>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disablerecycleNowWindow()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="backUpNowWindow">
+  <div class="popup-header">
+    <strong> BACKUP NOW</strong>
+    <a class="close" (click)="disablebackUpNowWindow()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <p style="font-weight: 500;">Back Up Type :</p>
+        <div class="ui-g" style="padding-left: 20%;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="fullStack" name="backUpNowType" value="fullStack"/>
+                <label for="fullStack" style="margin-right: 100px;">Full Stack</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="dBOnly" name="backUpNowType" value="dBOnly"/>
+                <label for="dBOnly" style="margin-right: 101px;" >DB Only</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="appConfigOnly" name="backUpNowType"value="appConfigOnly"/>
+                <label for="appConfigOnly" style="margin-right: 101px;">App Config Only</label>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disablebackUpNowWindow()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="refreshNowWindow">
+  <div class="popup-header">
+    <strong>REFRESH NOW</strong>
+    <a class="close" (click)="disablerefreshNowWindow()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <div style="margin-bottom:15px;">Source :&nbsp;  
+        <!--<p-dropdown [options]="environmentsList" optionLabel="name" [style]="{'width':'166px'}"></p-dropdown>-->
+        <select><option *ngFor="let x of envlist">{{x}}</option></select>
+      </div>
+      <div style="margin-bottom:15px;">Target &nbsp;:&nbsp;
+       <input type="text" value="testword" disabled/>
+      </div>
+      <p style="font-weight: 500;">Refresh Type :</p>
+        <div class="ui-g" style="width:250px;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="fullStack" name="refreshNowType" value="fullStack"/>
+                <label for="fullStack" style="margin-right: 100px;" >Full Stack</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="dBOnly" name="refreshNowType" value="dBOnly"/>
+                <label for="dBOnly" style="margin-right: 101px;" >DB Only</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="radio" id="appConfigOnly" name="refreshNowType" value="appConfigOnly"/>
+                <label for="appConfigOnly" style="margin-right: 101px;">App Config Only</label>
+              </div>
+        </div>
+        <div class="ui-g" style="width:500px;margin-bottom:10px;">
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="prepostRefreshTasks" value="prepostRefreshTasks"/>
+                <label for="prepostRefreshTasks" style="margin-right: 100px;" >Perform Pre/Post Refresh Tasks</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="piaConfig" value="piaConfig">
+                <label for="piaConfig" style="margin-right: 101px;" >Preserve Target PIA Config</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="preserveTargetSecurity" value="preserveTargetSecurity">
+                <label for="preserveTargetSecurity" style="margin-right: 101px;">Preserve Target Security</label>
+              </div>
+              
+              <div class="ui-g-12" style="padding-left:0px;">
+                <input type="checkbox" id="makeSensitiveData" value="makeSensitiveData">
+                <label for="makeSensitiveData" style="margin-right: 101px;">Mask Sensitive Data</label>
+              </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="disablerefreshNowWindow()">Cancel</button>
+          <button class="btn btn-primary" (click)="domainActionExecution()">Ok</button>
+        </div>
+    </div>
+  </div>
+</div>

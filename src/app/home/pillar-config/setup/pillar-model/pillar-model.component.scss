@@ -1,0 +1,32 @@
+@import "../../../../../styles/_variables";
+
+.invalid {
+    box-shadow: 0 0.01rem .25rem red !important;
+    border: 2px dashed red !important;
+    .invalid-text {
+      color: red !important;
+      font-weight: 700;
+      position: relative;
+      &:before {
+        position: absolute;
+        font-family: 'FontAwesome';
+        top: 0  ;
+        left: calc(100% + 10px);
+        content: "\f06a";
+      }
+    }
+  }
+
+ .form-group {
+    margin-bottom: 0;
+
+    .label {
+      color: $secondary-color !important;
+    }
+
+    input {
+      background-color: transparent;
+    }
+
+    
+  }

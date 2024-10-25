@@ -1,0 +1,13 @@
+
+<div class="edit-admin-container">
+    <ul class="primary-tabs mt-1">
+        <li (click)="onTabSelect(tab)" *ngFor="let tab of tabs"
+            [ngClass]="{'selected' : selectedTab?.name === tab.name}">{{tab.display}}</li>
+    </ul>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'invusers'">
+        <inv-users></inv-users>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'erpausers'">
+        <erpa-users></erpa-users>
+    </div>
+</div>

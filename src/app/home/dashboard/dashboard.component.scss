@@ -1,0 +1,86 @@
+@import "../../../styles/_variables";
+
+$status: checking #FBAA00, running #7FCF27, stopped #c8071D;
+$runningStatus: start #7FCF27, stop #C8071D;
+
+.dashboard-container {
+  padding: 10px 0;
+  .table-container {
+    background-color: $white;
+    border-radius: 4px;
+    padding: 20px;
+    .table {
+      margin: 0;
+      tr {
+        th {
+          vertical-align: middle;
+        }
+        td, th {
+          border-bottom: 1px solid #dee2e6;
+        }
+      }
+      tbody {
+        tr {
+          th {
+            vertical-align: middle;
+          }
+          td {
+            &:last-child {
+              text-align: center;
+            }
+          }
+        }
+      }
+    }
+
+    .secondary-text {
+      color: lighten($secondary, 5%);
+      font-style: italic;
+      display: block;
+      font-size: 80%;
+      font-weight: 400;
+    }
+
+    // classes for Status
+    @each $item in $status {
+      .#{nth($item, 1)} {
+        position: relative;
+        color: nth($item, 2);
+        padding-left: 20px;
+        &:after {
+          content: '';
+          width: 10px;
+          height: 10px;
+          background-color: nth($item, 2);
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          border-radius: 100%;
+        }
+      }
+    }
+
+    // Classes for Runnning Status
+    @each $item in $runningStatus {
+      .#{nth($item, 1)} {
+        cursor: pointer;
+        color: nth($item, 2);
+        font-size: 1.5rem;
+      }
+    }
+
+    ul.legends {
+      margin-top: 15px;
+      margin-bottom: 0;
+      li {
+        list-style: none;
+        display: inline-block;
+        margin-left: 30px;
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}

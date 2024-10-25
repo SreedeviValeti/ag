@@ -1,0 +1,39 @@
+[
+    {
+      "Pillar": "Campus Solutions",
+      "Tools": 8.59,
+      "Tools_Patch": 0.25,
+      "Application": 9.2,
+      "PUM": 43,
+      "DB": "Oracle Standard",
+      "RDS_OR_EC2": "RDS",
+      "Version": "19 c",
+      "License_type": "BYOL/License Included",
+      "OS": "OEL",
+      "AMI_Source": "Amazon  AMI/ CIS AMI",
+      "HA Env list": "Prod, UAT",
+      "NHA Env List": "Demo, Dev, TST",
+      "External Facing LB": "No",
+      "Ealstic": "3 Node",
+      "LogStash": "Shared across Pillars",
+      "Support (Oracle / Rimini)": "Oracle"
+    },
+    {
+      "Pillar": "HUman Resource",
+      "Tools": 8.59,
+      "Tools_Patch": 0.25,
+      "Application": 9.2,
+      "PUM": 43,
+      "DB": "Oracle Standard",
+      "RDS_OR_EC2": "RDS",
+      "Version": "19 c",
+      "OS": "OEL",
+      "AMI_Source": "Amazon  AMI/ CIS AMI",
+      "HA Env list": "Prod, UAT",
+      "NHA Env List": "Demo, Dev, TST",
+      "External Facing LB": "No",
+      "Ealstic": "3 Node",
+      "LogStash": "Shared across Pillars",
+      "Support (Oracle / Rimini)": "Oracle"
+    }
+  ]

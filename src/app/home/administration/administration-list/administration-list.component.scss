@@ -1,0 +1,279 @@
+@import "../../../../styles/_variables";
+
+.admin-cards-container {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  .fixed-container {
+    position: fixed;
+    padding-top: 10px;
+    top: 42px;
+    left: 262px;
+    width: 100%;
+    z-index: 3;
+    background-color: #F1F3FF;
+  }
+  .cards-container {
+    position: relative;
+    margin-top: 110px;
+    padding: 0 15px;
+
+    .content-container {
+      background-color: $white;
+      padding: 1rem;
+      border-radius: 0.25rem;
+    
+      .center {
+        text-align: center;
+      }
+    }
+  }
+  .tab-row {
+    ul {
+      padding: 0;
+      margin: 0;
+      border-bottom: 1px solid $gray-300;
+      li {
+        list-style: none;
+        display: inline-block;
+        margin: 0 10px 0 0;
+        min-width: 100px;
+        text-transform: capitalize;
+        position: relative;
+        border-bottom: 2px solid transparent;
+        color: $gray-600;
+        &.current {
+          border-bottom: 2px solid $primary;
+          color: $gray-800;
+        }
+        &:last-child {
+          margin-right: 0;
+        }
+        &.active {
+          padding-left: 15px;
+          &:after {
+            background-color: #7FCF27;
+          }
+        }
+        &.inactive {
+          padding-left: 15px;
+          &:after {
+            background-color: #C8071D;
+          }
+        }
+        &.checking {
+          padding-left: 15px;
+          &:after {
+            background-color: #FBAA00;
+          }
+        }
+        &:after {
+          content: '';
+          width: 10px;
+          height: 10px;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          border-radius: 100%;
+        }
+      }
+    }
+  }
+  .card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    transition: all 333ms linear 333ms;
+    margin-bottom: 15px;
+    min-height: 324px;
+    &:hover {
+      transform: scale(1.025);
+      background-color: lighten($color: $primary, $amount: 50);
+      .card-header {
+        color: $gray-700;
+      }
+      // box-shadow: 0 0 11px 10px rgba(173,177,181,0.5) !important;
+    }
+    &.no-hover {
+      transform: none;
+      background-color: $white;
+      .card-body {
+        display: flex;
+        align-items: center;
+        .row {
+          width: 100%;
+        }
+      }
+    }
+    .card-header, .card-body, .card-footer {
+      transition: all 333ms linear 333ms;
+      background-color: transparent;
+      line-height: 1;
+      padding: 1.25rem;
+    }
+    .card-header {
+      position: relative;
+      // color: $gray-500;
+      padding-right: 1.25rem; // calc(1.25rem + 20px);
+      text-transform: uppercase;
+      i {
+        cursor: pointer;
+      }
+      // &:after {
+      //   content: '';
+      //   width: 10px;
+      //   height: 10px;
+      //   position: absolute;
+      //   top: 50%;
+      //   right: 1.25rem;
+      //   transform: translateY(-50%);
+      //   border-radius: 100%;
+      // }
+      strong {
+        font-size: 89%;
+       i {
+         font-size: 89%;
+         &.running {
+           color: #7FCF27;
+         }
+         &.stopped {
+           color: #C8071D;
+         }
+         &.checking {
+           color: #FBAA00;
+         }
+       }
+     }
+   }
+    .card-body {
+      // height: 180px;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .big-add {
+        font-size: 15rem;
+        color: $primary;
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      // ul.versions {
+      //   margin: 0;
+      //   padding: 0;
+      //   list-style: none;
+      //   li {
+      //     display: block;
+      //     margin: 0;
+      //     margin-bottom: 15px;
+      //     margin-left: 100px;
+      //     color: $secondary;
+      //     margin-right: 15px;
+      //     .w150 {
+      //       min-width: 150px;
+      //       color: $secondary;
+      //       font-weight: initial;
+      //     }
+      //     span {
+      //       font-weight: 600;
+      //       color: $black;
+      //     }
+      //     &:first-child {
+      //       margin-left: 0;
+      //       text-decoration: underline;
+      //     }
+      //   }
+      // }
+      .action-rows {
+        padding: 1rem 0;
+        border-bottom: 1px solid $border-color;
+        &:last-child {
+          border-bottom: none;
+          padding-bottom: 0;
+        }
+        .label-text {
+          font-size: 0.625rem;
+          color: $secondary;
+          display: block;
+        }
+        .label-value {
+          display: block;
+          color: $black;
+          font-size: 0.875rem;
+        }
+        a {
+          font-size: 0.875rem;
+        }
+        .action {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          color: $primary;
+          font-size: 1.25rem;
+          span {
+            display: flex;
+          }
+        }
+        i {
+          cursor: pointer;
+          &:hover {
+            color: $primary;
+          }
+        }
+      }
+    }
+    .card-footer {
+      text-align: center;
+      .btn {
+        &.btn-sm {
+          min-width: 75px;
+          border-radius: 20px;
+        }
+        + .btn {
+          margin-left: 20px;
+        }
+      }
+      // display: flex;
+      // justify-content: space-between;
+    }
+    // &.active {
+    //   .card-header {
+    //     &:after {
+    //       background-color: #7FCF27;
+    //     }
+    //   }
+    // }
+    // &.checking {
+    //   .card-header {
+    //     &:after {
+    //       background-color: #FBAA00;
+    //     }
+    //   }
+    // }
+    // &.inactive {
+    //   cursor: not-allowed;
+    //   .card-header {
+    //     &:after {
+    //       background-color: #C8071D;
+    //     }
+    //   }
+    // }
+  }
+}
+
+
+.fa.disabled,
+.fa[disabled],
+.disabled > .fa,
+[disabled] > .fa {
+  opacity: 0.5;
+  /*optional*/ cursor: not-allowed;
+  /*optional*/ pointer-events: none;
+}
+
+.add-new {
+  font-size: 1.75rem;
+  color: $primary;
+  cursor: pointer;
+  line-height: 49px;
+}

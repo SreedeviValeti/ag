@@ -1,0 +1,321 @@
+h2.page-heading {
+  margin: 0 0 20px 0;
+  //margin: 250px 0 20px 250px;
+  padding: 0;
+  display: inline-block;
+  font-size: 1.5rem;
+  color: $primary;
+  line-height: 1;
+}
+
+.ph-sub-text {
+  font-size: 50%;
+  color: $gray-500;
+  margin-left: 5px;
+}
+
+.button-container {
+  background-color: $white;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  border-radius: 0.25rem;
+  margin-top: 20px;
+}
+
+/* stylings for scroll bar */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #93c4f5 $gray-300;
+}
+
+/* Works on Chrome/Edge/Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+*::-webkit-scrollbar-track {
+  background: $gray-400;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #93c4f5;
+  border-radius: 20px;
+  border: 3px solid $gray-300;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+  }
+}
+
+/* scroll bar styling ends here */
+
+/* panel layout mechanics */
+.panel-wrap {
+  position: fixed;
+  top: 42px;
+  bottom: 0;
+  right: 0;
+  width: 60%;
+  // max-width: 500px;
+  transform: translateX(100%);
+  transition: .3s ease-out;
+  z-index: 999;
+  &.wrap {
+    transform: translateX(0%);
+  }
+  .panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f8f9fa;
+    color: $secondary-color;
+    overflow: auto;
+    padding: 1em;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 58px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:rgba(0,0,0,0.5);
+  opacity: 0.5;
+  z-index: 998;
+  transition: background .5s ease-out;
+}
+
+
+/* simulate panel state control --
+this can also be triggered by a 
+class name added to the body tag. 
+Just using a checkbox sibling here
+for simplicity
+*/ 
+[type="checkbox"]:checked ~ .panel-wrap {
+  transform: translateX(0%);
+}
+
+.popup {
+  &-container {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    &.modal-sm {
+      max-width: 300px;
+    }
+    &.modal-md {
+      max-width: 500px;
+    }
+    &.modal-lg {
+      max-width: 800px;
+    }
+    &.modal-xl {
+      max-width: 1040px;
+    }
+    width: 100%;
+    min-width: 100px;
+    min-height: 200px;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid  rgba(0, 0, 0, 0.2);
+    border-radius: 0.3rem;
+    z-index: 999;
+  }
+  &-header {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 0;
+      color: $gray-700;
+    }
+    .close {
+      position: absolute;
+      top: 0.5rem;
+      right: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      color: $gray-600;
+    }
+  }
+  &-body {
+    position: relative;
+    padding: 0.5rem 1rem;
+  }
+  &-footer {
+    padding: 0.5rem 1rem;
+  }
+}
+
+// toggle button css
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    &:checked + .slider {
+      background-color: #2196F3;
+    }
+    &:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+    &:checked + .slider:before {
+      -webkit-transform: translateX(14px);
+      -ms-transform: translateX(14px);
+      transform: translateX(14px);
+    }
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    &:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 7px;
+      bottom: 3px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+    &.round {
+      border-radius: 34px;
+      &:before {
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+/* tabs : primary and secondary */
+
+ul.primary-tabs {
+  margin-bottom: 0;
+  li {
+    padding: 10px 20px;
+    border: 1px solid $gray-300;
+    display: inline-block;
+    border-radius: 20px 0  0 0;
+    margin-right: -15px;
+    background-color: $gray-100;
+    text-transform: capitalize;
+    cursor: pointer;
+    transition: 333ms background-color, linear 333ms;
+    &:hover {
+      background-color: lighten($color: $primary, $amount: 40);
+      transition: 333ms background-color, linear 333ms;
+    }
+    &.selected {
+      color: $primary;
+      font-weight: 500;
+      margin-right: -5px;
+      border-bottom: 1px solid $white;
+      background-color: $white;
+      transition: background-color 333ms, linear 0.5s;
+    }
+    transition: background-color 333ms, linear 0.5s;
+  }
+}
+ul.secondary-tabs {
+  padding: 0;
+  margin-bottom: 0;
+  border: 1px solid $gray-400;
+  border-top: 0;
+  background-color: $white;
+  li {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: 333ms font-weight, linear 333ms;
+    &:hover {
+      font-weight: 500;
+      transition: 333ms font-weight, linear 333ms;
+    }
+    &.selected {
+      color: $primary;
+      font-weight: 500;
+    }
+    &:last-child {
+      &:after {
+        background-color: $white;
+      }
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 30%;
+      height: 40%;
+      width: 1px;
+      background-color: $gray-400;
+    }
+  }
+}
+
+// End of tabs 
+
+// blinker animation
+// blinker animation 
+.blink {
+  animation: blinker 2s cubic-bezier(0.47, 0, 0.745, 0.715) infinite;
+  font-weight: 500;
+}
+
+
+@keyframes blinker {
+  0% {
+    color: #7FCF27;
+  }
+  20% {
+    color: darken($color: #7FCF27, $amount: 20);
+  }
+  50% {
+    opacity: 0;
+    color: darken($color: #7FCF27, $amount: 30);
+  }
+  80% {
+    color: darken($color: #7FCF27, $amount: 40);
+  }
+}
+
+.wordbreak{
+  &.table{
+    tbody{
+      tr{
+        td{
+          word-break: break-all;
+        }
+      }
+    }
+  }
+}
+
+// end of blinking

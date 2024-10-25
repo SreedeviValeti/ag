@@ -1,0 +1,92 @@
+<div class="admin-cards-container">
+  <async-loader *ngIf="loading"></async-loader>
+  <div class="fixed-container" *ngIf="!loading">
+    <div class="row">
+      <div class="col">
+        <h2 class="page-heading">Environments<sup class="ph-sub-text">{{environmentsList?.length}} Nos</sup></h2>
+      </div>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="tab-row">
+          <ul>
+            <li class="current" data-toggle="tooltip" data-placement="bottom" title="All Servers: 10">All Environments
+            </li>
+            <li class="active" data-toggle="tooltip" data-placement="bottom" title="Active Servers: 5">Running</li>
+            <li class="inactive" data-toggle="tooltip" data-placement="bottom" title="Inactive Servers: 5">Stopped</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cards-container" *ngIf="!loading">
+    <div class="row">
+      <div class="col-3" *ngFor="let env of environmentsList">
+        <div class="card shadow" [ngClass]="{'active':!env.disableenv,
+              'inactive':env.disableenv, 'checking': false}">
+          <div class="card-header">
+            <div class="row">
+              <div class="col">
+                <strong>
+                  {{env.envName | uppercase}}
+                  <i class="fa fa-check-circle-o running" *ngIf="!env.disableenv" aria-hidden="true"></i>
+                  <i class="fa fa-minus-circle stopped" *ngIf="env.disableenv" aria-hidden="true"></i>
+                </strong>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <table class="table">
+                  <tbody>
+                    <tr>
+                      <td class="border-top-0">People Tools:</td>
+                      <td class="border-top-0">{{ env.peopleTools}}</td>
+                      <!--<td class="border-top-0">{{'' + infraCardVersions.peopleTools}}</td>-->
+                    </tr>
+                    <tr>
+                      <td>Application:</td>
+                      <!--<td>{{prefix}} {{'' + infraCardVersions.application}}</td>-->
+                      <td>{{env.application}}</td>
+                    </tr>
+                    <tr>
+                      <td>Image Update:</td>
+                      <!--<td>{{'' + infraCardVersions.imageUpdate}}</td>-->
+                      <td>{{ env.imageUpdate}}</td>
+                    </tr>
+                    <tr >
+                      <td>AMI ID:</td>
+                      <!--<td>{{'' + infraCardVersions.imageUpdate}}</td>-->
+                      <td><span style="margin-left: -38px;">ami-0131316000f02f99f
+                      </span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer">
+            <button type="button" [disabled]="env.disableenv" [class.disabled]="env.disableenv"
+              class="btn btn-outline-primary btn-sm ripple" [routerLink]="[env.envID]">View</button>
+            <!--  <button type="button" [disabled]="env.disableenv" [class.disabled]="env.disableenv"
+              class="btn btn-outline-secondary btn-sm ripple" *ngIf="hasEditAccess"
+              [routerLink]="['edit',env.envID]">Edit</button> -->
+          </div>
+        </div>
+      </div>
+      <div class="col" *ngIf=" environmentsList?.length == 0 ">
+        <div class="row">
+          <div class="col">
+            <div class="content-container border shadow-sm">
+              <div class="center">
+                <p> No Environments found</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

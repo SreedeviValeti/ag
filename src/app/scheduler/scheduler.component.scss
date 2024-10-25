@@ -1,0 +1,53 @@
+@import "../../styles/_variables";
+
+.scheduler-container {
+  padding: 10px 0;
+
+  .the-fieldset {
+    background-color: $white;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid $gray-200;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    height: 100%;
+    border-radius: 0.25rem;
+    .the-legend {
+      background-color: $white;
+      border-style: none;
+      border-width: 0;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+      margin-bottom: 0;
+      width: auto;
+      padding: 0 10px;
+      border: 1px solid $gray-200;
+    }
+  }
+  i.not-optional {
+    &:after {
+      content: '*';
+      font-size: 1rem;
+      color: #C8071D;
+    }
+  }
+  span.note {
+    font-size: 75%;
+    color: $gray-600;
+    font-style: italic;
+    margin-top: 1rem;
+  }
+  .legend {
+    background-color: $white;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid $gray-200;
+    padding: 10px 20px;
+    color: $gray-600;
+    font-style: italic;
+    i.not-optional {
+      &:after {
+        font-size: 1rem;
+      }
+    }
+  }
+}

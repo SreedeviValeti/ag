@@ -1,0 +1,82 @@
+<nav class="navbar shadow-sm fixed-top">
+  <a class="navbar-brand" href="#" alt="Active Genie">
+    <img src="../../../assets/images/erpa_new_logo-trimmy.png" style="height: 23px; width: 100px;" alt="Paris">
+  </a>
+  <div class="profile-pane">
+    <div class="profile" (clickOutside)="onClickedOutside($event)">
+      <div  class="notifications" [class.zero-count]="notifications.length == 0" (click)="showNoti = !showNoti;">
+        <div class="count">{{notifications.length}}</div>
+        <i class="fa fa-bell-o" aria-hidden="true"></i>
+        <div class="notification-list-container" [class.noti-list-show]="showNoti">
+          <ul>
+            <li class="admin"  *ngFor="let notification of notifications" (click)="onNotifClick(notification)">
+              <div>EnvName : {{notification.envName}}</div>
+              <div>Description : {{notification.description}}</div>
+              </li>
+          </ul>
+          <i></i>
+        </div>
+      </div>
+      <h3 (click)="showDDL = !showDDL">{{userName}}</h3>
+      <fa class="dd-arrow" name="angle-down" (click)="showDDL = !showDDL"></fa>
+      <div class="dropdownlist" [class.dl-show]="showDDL">
+        <ul>
+          <li (click)="changePwdFunctionality()">Change Password</li>
+        </ul>
+        <i></i>
+      </div>
+    </div>
+    <div class="v-line"></div>
+    <fa (click)="doLogOut()" class="signout" name="sign-out"></fa>
+  </div>
+</nav>
+
+<div class="overlay" *ngIf="showApproveDenyPopup"></div>
+<div class="noti-popup shadow" *ngIf="showApproveDenyPopup">
+  <div class="popup-header">
+    <a class="close" (click)="showApproveDenyPopup = !showApproveDenyPopup"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="row  mb-3">
+    <div class="col">
+      <i class="fa fa-exclamation-circle info" aria-hidden="true"></i>
+    </div>
+  </div>
+  <div class="row mb-2">
+    <div class="col">
+      <p><strong>{{selectedNotification.envName}}, </strong>{{selectedNotification.description}}
+     </p>
+    </div>
+  </div>
+  <div *ngIf="selectedNotification.notificationsType && selectedNotification.notificationsType=='step' ">
+    <div class="row mb-2">
+      <div class="col">
+        <p><strong>Expected Output </strong>{{selectedNotification.expectedOutput}}
+       </p>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <p><strong>Run CommandID </strong>{{selectedNotification.runCommandID}}
+       </p>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col">
+        <p><strong>Run Command Output </strong>{{selectedNotification.runCommandOutput}}
+       </p>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="row mb-2">
+    <div class="col">
+      <p>Do you want to Approve Or Reject?</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary" (click)="approveOrDecline(selectedNotification.approvLink,true)">Approve</button>
+      <button class="btn btn-secondary" (click)="approveOrDecline(selectedNotification.rejectLink,false)">Decline</button>
+      </div>
+  </div>
+</div>

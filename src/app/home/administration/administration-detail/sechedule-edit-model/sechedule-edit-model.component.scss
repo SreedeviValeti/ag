@@ -1,0 +1,65 @@
+@import "../../../../../styles/_variables";
+
+
+.scheduler-container {
+  margin-bottom: 0;
+
+  .label {
+    color: $secondary-color !important;
+  }
+
+  input {
+    background-color: transparent;
+  }
+
+  
+  .the-fieldset {
+    background-color: $white;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    border: 1px solid $gray-400;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    height: 100%;
+    border-radius: 0.25rem;
+
+    .demo-container {
+      margin: 30px;
+    }
+    
+    .demo-card {
+      position: absolute;
+    }
+    
+    .demo-card-content {
+      body div.cdk-overlay-container {
+        z-index: 1000000;
+      }
+    }
+    
+    .demo-card-header {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      align-items: center;
+    }
+    
+    .demo-card-footer {
+      margin: 0px;
+      padding: 16px;
+    }
+    .the-legend {
+      background-color: $white;
+      border-style: none;
+      border-width: 0;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 500;
+      margin-bottom: 0;
+      width: auto;
+      padding: 0 10px;
+      border: 1px solid $gray-200;
+    }
+  }
+
+
+}
+

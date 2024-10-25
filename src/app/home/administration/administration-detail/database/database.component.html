@@ -1,0 +1,57 @@
+<async-loader *ngIf="loading"></async-loader>
+<div class="row mt-8" style="margin-left: 808px;" *ngIf="!loading" >
+    <button type="button" (click)="snapshot()"    [ngClass]="{'disabled':!disableRefreshButtonFlag, 'enabled':disableRefreshButtonFlag}" class="btn btn-primary">Take Snapshot</button>
+
+  </div>
+<div class="row mt-12"  >
+    <div class="col-12">
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td style="padding:10px;width:130px;"><b>Last Snapshot Create Time: </b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.LastSnapshotCreateTime}}</td>
+                <td style="padding:10px;"><b>License Model :</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.LicenseModel}}</td>
+                <td style="padding:10px;"><b>Engine Version:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.EngineVersion}}</td>
+            </tr>
+            <tr>
+                <td style="padding:10px;width:130px;"><b>DBInstance Status:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.DBInstanceStatus | titlecase}}</td>
+                <td style="padding:10px;"><b>DBInstance Class:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.DBInstanceClass}}</td>
+                <td style="padding:10px;"><b>Engine:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.Engine}}</td>
+            </tr>
+            <tr>
+                    <td style="padding:10px;width:130px;"><b>Endpoint Address:</b></td>
+                    <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.Endpoint_Address}}</td>
+                    <td style="padding:10px;"><b>Backup Retention Period:</b></td>
+                    <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.BackupRetentionPeriod}}</td>
+                    <td style="padding:10px;"><b>Port:</b></td>
+                    <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.Port}}</td>
+            </tr>
+            <tr>
+                <td style="padding:10px;width:130px;"><b>DBInstance Arn:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.DBInstanceArn}}</td>
+                <td style="padding:10px;"><b>Org ID:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.orgid}}</td>
+                <td style="padding:10px;"><b>Env:</b></td>
+                <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.env | titlecase}}</td>
+        </tr>
+        <tr>
+            <td style="padding:10px;width:130px;"><b>Application Pillar:</b></td>
+            <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.application_pillar}}</td>
+            <td style="padding:10px;"><b>Application:</b></td>
+            <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.application | titlecase}}</td>
+            <td style="padding:10px;"><b>Env Type:</b></td>
+            <td style="padding:10px;font-size:smaller;">{{databaseData && databaseData.envtype}}</td>
+    </tr>
+        </table>
+    </div>
+  

@@ -1,0 +1,27 @@
+<async-loader *ngIf="loading"></async-loader>
+<div row *ngIf="!loading" >
+    <div class="col-6" style="margin-top: 30px">
+        <h1  style="font-size: 30px; color: darkblue;" class="tab-title">Download Oracle Patch</h1>
+      </div>
+      <div class="col-8">
+    <form class="content-container" [formGroup]="oraclePatch"  (ngSubmit)="downloadOraclePatch()" >
+            <div class = "col-6">
+                <div class="form-group">
+                    <label class = "tab-title">Patch Number</label>
+                    <input type="text" class="form-control" formControlName="patchnumber">
+                </div>
+            </div>
+            <div class = "col-6">
+
+            <div class="form-group">
+                <label class = "tab-title"> Platform</label>
+                <select class="form-control" formControlName="platform" >
+                    <option style="background-color: white" *ngFor="let platform of os" [value]="platform" >{{platform}}</option>
+                </select>
+        </div>
+        </div>
+
+        <button  class="btn btn-primary button-color" >Download</button>    
+    </form>
+    </div>
+</div>

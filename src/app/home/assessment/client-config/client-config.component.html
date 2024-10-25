@@ -1,0 +1,105 @@
+<div class="setup-pillar-container">
+    <async-loader *ngIf="loading"></async-loader>
+  <!--   <div class="row">
+      <div class="col">
+        <h2 class="page-heading">App Configuration Page</h2>
+        <i aria-hidden="true" (click)="createPillar()" ngbTooltip="Create New Pillar" container="body" class="fa fa-plus-circle add-new-big pull-right"></i>
+      </div>
+    </div> -->
+    <div  *ngIf="!loading">
+
+        <div class="cards-container" >
+         
+            <div class="row" >
+                <div class="col-3" *ngFor="let app of apps">
+                    <div class="card shadow">
+                      <div class="card-header">
+                        <div class="row">
+                          <div class="col">
+                            <strong>
+                              {{app.Pillar | uppercase}}
+                              <i class="fa fa-check-circle-o running"  aria-hidden="true"></i>
+                            </strong>
+                            <i class="fa fa-pencil ml-3 rem-125 pull-right"
+                              aria-hidden="true" ngbTooltip="Edit App"(click) = "openEditAppModel(app)" ></i>
+                           <!--  <i class="fa fa-trash ml-2 rem-125 pull-right" aria-hidden="true" ngbTooltip="Delete the App"
+                              (click)="showDeletePopup(pillar,env, $event);"></i> -->
+        
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="row">
+                          <div class="col">
+                            <table class="table">
+                              <tbody>
+                                <tr>
+                                  <td class="border-top-0">Tools Version:</td>
+                                  <td class="border-top-0">{{ app.Tools}}</td>
+                                  <!--<td class="border-top-0">{{'' + infraCardVersions.peopleTools}}</td>-->
+                                </tr>
+                                <tr>
+                                  <td>Application Version:</td>
+                                  <!--<td>{{prefix}} {{'' + infraCardVersions.application}}</td>-->
+                                  <td>{{app.Application}}</td>
+                                </tr>
+                                <tr>
+                                  <td>Patch Level:</td>
+                                  <!--<td>{{'' + infraCardVersions.imageUpdate}}</td>-->
+                                  <td>{{app.Tools_Patch}}</td>
+                                </tr>
+                                <tr>
+                                  <td class="border-top-0">PUM Level:</td>
+                                  <td class="border-top-0">{{ app.PUM}}</td>
+                                  <!--<td class="border-top-0">{{'' + infraCardVersions.peopleTools}}</td>-->
+                                </tr>
+                                <tr>
+                                  <td class="border-top-0">OS Version:</td>
+                                  <td class="border-top-0">{{ app.OS}}</td>
+                                  <!--<td class="border-top-0">{{'' + infraCardVersions.peopleTools}}</td>-->
+                                </tr>
+                                <tr>
+                                  <td class="border-top-0">DB Version:</td>
+                                  <td class="border-top-0">{{ app.DB}}</td>
+                                  <!--<td class="border-top-0">{{'' + infraCardVersions.peopleTools}}</td>-->
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="card-footer">
+                        <!-- <button type="button" [disabled]="env.disableenv" [class.disabled]="env.disableenv"
+                                class="btn btn-outline-primary btn-sm ripple" [routerLink]="[env.envID]">View</button> -->
+                        <button type="button" (click)="openviewAppModel(app)" class="btn btn-outline-secondary btn-sm ripple"
+                         >View Details</button>
+                      </div>
+                    </div>
+                  </div>
+              <div class="col-3">
+                <div class="card shadow no-hover" style="min-height: 490px !important">
+                  <div class="card-header">
+                    <div class="row">
+                      <div class="col">
+                        <strong>
+                          Add Application
+                        </strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col">
+                        <i class="fa fa-plus-circle big-add"  (click)="openCreateAppModel()"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+            </div>
+          </div>
+    </div>
+
+  </div>

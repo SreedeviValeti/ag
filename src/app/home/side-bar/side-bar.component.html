@@ -1,0 +1,31 @@
+<div class="lhn-container shadow leftCol">
+  <ul class="lhn">
+    <li *ngFor="let menu of menuItems" [ngClass]="{'active':menu.active}">
+      <ul>
+          <li routerLink="{{menu.path}}" *ngIf="hasAccess(menu)" >
+            <img src="{{menu.iconUrl}}" [ngClass]="{'active':menu.subMenuItems}" class=" metrics menu-icon">
+            <h3 class="heading">{{menu.displayName}}
+                <i *ngIf="menu.subMenuItems.length>0" (click)="showHideSubMenu($event,menu)"
+                   class="fa " [ngClass]="{'fa-caret-down':!menu.show,'fa-caret-up': menu.show}" aria-hidden="true"></i>
+            </h3>
+            <div class="subitems"></div>
+          </li>
+          <ng-container *ngIf="menu.show">
+            <li  *ngFor="let subMenu of menu.subMenuItems" routerLink="{{subMenu.path}}" 
+             [ngClass]="{'active':subMenu.active}"
+             class="fa " [ngClass]="{'fa-caret-down':!subMenu.show,'fa-caret-up': subMenu.show}"
+             >{{subMenu.displayName}}
+             <div class="spacer"></div>
+             <ng-container *ngIf="subMenu.show">
+              <li  *ngFor="let subsubMenu of subMenu.subMenuItems" routerLink="{{subsubMenu.path}}" 
+               [ngClass]="{'active':subsubMenu.active}" 
+               >{{subsubMenu.displayName}}</li>
+              </ng-container>
+            </li>
+            </ng-container>
+      </ul>
+    </li>
+  </ul>
+</div>
+<div class="menu-icon-area"></div>
+<div class="menu-desc-area"></div>

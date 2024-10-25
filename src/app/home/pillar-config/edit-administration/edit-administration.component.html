@@ -1,0 +1,36 @@
+<div class="edit-admin-container">
+    <async-loader *ngIf="loading">Loading ....</async-loader>
+
+    <div *ngIf="envData">
+        <div class="row mb-0">
+            <div class="col">
+                <h2 class="page-heading mb-1">
+                    <i class="fa fa-caret-left back-icon" ngbTooltip="Back to Env List Page" container="body"
+                        (click)="goToHomeEnvPage()"></i>
+                    {{envData.envName}}</h2>
+            </div>
+        </div>
+
+        <ul class="primary-tabs mt-1">
+            <li (click)="onTabSelect(tab)" *ngFor="let tab of tabs"
+                [ngClass]="{'selected' : selectedTab?.name === tab.name}">{{tab.display}}</li>
+        </ul>
+        <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'env'">
+            <environment-edit [envData]="envData" (triggerEnvLoad)="loadEnvironmentData()"></environment-edit>
+        </div>
+
+        <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'steps'">
+            <steps-edit [envData]="envData" [activity]="refreshActivity"></steps-edit>
+        </div>
+
+        <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'loadCache'">
+            <steps-edit [envData]="envData" [activity]="loadCache"></steps-edit>
+        </div>
+<!-- 
+        <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'bounce'">
+            <rolling-bounce [appName]="appName" [envName]="envName"></rolling-bounce>
+        </div> -->
+    </div>
+
+
+</div>

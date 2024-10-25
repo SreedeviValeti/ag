@@ -1,0 +1,271 @@
+<div class="steps-container">
+    <async-loader *ngIf="loading"></async-loader>
+    <div class="row">
+        <div class="col text-right">
+            <span class="pos-rel" (clickOutside)="onClickedOutside($event)">
+                <a class="upload-icon icons"  (click)="showUpload = !showUpload"></a>
+                <div class="upload-popover-container" *ngIf="showUpload" >
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="file-upload">
+                                <h3>Please Upload Environment Details</h3>
+                                <input type="file" #fileUpload id="myFile" name="filename"
+                                    (change)="handleFileInput($event.target.files)">
+                                <button class="btn btn-primary float-right" (click)="requestUpload()">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                    <i></i>
+                </div>
+            </span>
+            <span class="vertical-separator big"></span>
+            <a id="downloadAnchorElem" style="display:none"></a>
+            <a class="download-icon icons" ngbTooltip="Download Steps" (click)="downloadFile()"></a>
+            <ng-template ngFor let-view [ngForOf]="views">
+                <span class="vertical-separator big"></span>
+                <a class="icons {{view}}" alt="View" [ngbTooltip]="view" [ngClass]="{'selected':selectedView === view}"
+                    (click)="showSelectedView(view)"></a>
+                <span *ngIf="!last" class="vertical-separator big"></span>
+            </ng-template>
+
+        </div>
+    </div>
+    <div class="row" *ngIf="selectedView === 'DATA-VIEW'">
+        <div class="col">
+            <div class="step-container shadow">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4"
+                        *ngFor="let step of steps;index as index; last as isLast; first as isFirst">
+                        <div class="step shadow" [ngClass]="{'invalid':!step.loading && !step.valid}">
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <div class="text-block">
+                                        Step No:
+                                        <span class="primary-color mr-2">
+                                            <b>{{step.step}}</b>
+                                        </span>
+                                        <i ngbTooltip="Move to top" *ngIf="!isFirst"
+                                            (click)="showActionPopUp(SWAP,step,true)" class="fa fa-arrow-up arrow mr-1"
+                                            aria-hidden="true"></i>
+                                        <i ngbTooltip="move to down" (click)="showActionPopUp(SWAP,step,false)"
+                                            *ngIf="!isLast" class="fa fa-arrow-down arrow" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <i class="fa fa-pencil edit" *ngIf="!step.isEdit" (click)="editStep(step)"
+                                        aria-hidden="true"></i>
+                                    <span class="vertical-separator"></span>
+                                    <i class="fa fa-trash delete" *ngIf="!step.isEdit"
+                                        (click)="showActionPopUp(DELETE,step)" aria-hidden="true"></i>
+                                    <span class="vertical-separator"></span>
+                                    <i ngbTooltip="Insert a record above" (click)="addNewStep(step)"
+                                        class="fa fa-plus add" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-block">
+                                        <span class="d-block"> Expected Time</span>
+                                        <span class="label-value"
+                                            [ngClass]="{'invalid-text':!step.validExpectedTime && !step.loading}">{{step.expectedTime}}</span>
+                                    </div>
+                                    <div class="text-block">
+                                        <span class="d-block"> InstanceId </span>
+                                        <span class="label-value"
+                                            [ngClass]="{'invalid-text':!step.validInstance && !step.loading}">{{step.instanceID}}</span>
+                                    </div>
+                                    <div class="text-block">
+                                        <span class="d-block"> Status</span>
+                                        <span class="label-value"
+                                            [ngClass]="{'invalid-text':!step.validStatus && !step.loading}">
+                                            {{step.status}}</span>
+                                    </div>
+                                    <div class="text-block">
+                                        <span class="d-block"> OS(Operation System)</span>
+                                        <span class="label-value"
+                                            [ngClass]="{'invalid-text':!step.validOS && !step.loading}">{{step.os}}</span>
+                                    </div>
+                                    <div class="text-block">
+                                        <span class="d-block"> Script Execution</span>
+                                        <span class="label-value"
+                                            [ngClass]="{'invalid-text':!step.validStepExecution && !step.loading}">
+                                            {{step.scriptExecution}}</span>
+                                    </div>
+                                    <div class="text-block">
+                                        <span class="d-block">Description</span>
+                                        <span class="label-value"
+                                            [ngClass]="{'invalid-text':!step.validStepDescription && !step.loading}">
+                                            {{step.stepDescription}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3">
+                        <div class="step shadow">
+                            <i ngbTooltip="Insert a record above" class="fa fa-plus-circle big-add"
+                                aria-hidden="true"></i>
+                            <!--(click)="openAddModel(addContent)"-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="step-container shadow mt-3 p-0">
+                <div class="row">
+                    <div class="col">
+                        <div class="test">
+                            <button class="btn btn-primary mr-3" *ngIf="steps.length===0"
+                                (click)="addNewStep(currentStep)">Add
+                                New</button>
+                            <button class="btn btn-secondary mr-3" *ngIf="steps.length>0"
+                                (click)="reset()">Reset</button>
+                            <button class="btn btn-primary mr-3" *ngIf="steps.length>0"
+                                (click)="showActionPopUp(SUBMIT)">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="selectedView === 'JSON-VIEW'">
+        <div class="col">
+            <div class="step-container">
+                <pre><code>   {{  jsonViewData  }}</code></pre>
+
+            </div>
+        </div>
+    </div>
+    <div class="table-container" *ngIf="selectedView === 'GRID-VIEW'">
+        <div class="row">
+            <div class="col">
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th></th>
+                            <th>Step No</th>
+                            <th>Expected Time</th>
+                            <th>InstanceID</th>
+                            <th>Status</th>
+                            <th>OS</th>
+                            <th>ScriptExecution</th>
+                            <th>StepDescription</th>
+                            <th class="text-left">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="loading">
+                        <async-loader></async-loader>
+                    </tbody>
+                    <tbody *ngIf="!loading">
+                        <ng-container *ngFor="let step of steps;index as index; last as isLast; first as isFirst">
+                            <tr [ngClass]="{'invalid':!step.loading && !step.valid }">
+                                <td class="text-center">
+                                    <i ngbTooltip="Move to top" *ngIf="!isFirst"
+                                        (click)="showActionPopUp(SWAP,step,true)" class="fa fa-arrow-up arrow"
+                                        aria-hidden="true"></i>
+                                </td>
+
+                                <td width="20">
+                                    <div class="form-group">
+                                        <label class="form-label">{{step.step}}</label>
+                                    </div>
+                                </td>
+
+                                <td width="20" [ngClass]="{'invalid':!step.validExpectedTime && !step.loading}">
+                                    <div class="form-group">
+                                        <label class="form-label">{{step.expectedTime}}</label>
+                                    </div>
+                                </td>
+
+                                <td [ngClass]="{'invalid':!step.validInstance && !step.loading}">
+                                    <div class="form-group">
+                                        <label class="form-label">{{step.instanceID}}</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group stpDescWidth"
+                                        [ngClass]="{'invalid':!step.validStatus && !step.loading}">
+                                        <label class="form-label">{{step.status}}</label>
+                                    </div>
+                                </td>
+
+                                <td [ngClass]="{'invalid':!step.validOS && !step.loading}">
+                                    <div class="form-group">
+                                        <label class="form-label">{{step.os}}</label>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-group scrExecWidth"
+                                        [ngClass]="{'invalid':!step.validStepExecution && !step.loading}">
+                                        <label class="form-label">{{step.scriptExecution}}</label>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-group stpDescWidth"
+                                        [ngClass]="{'invalid':!step.validStepDescription && !step.loading}">
+                                        <label class="form-label">{{step.stepDescription}}</label>
+                                    </div>
+                                </td>
+
+                                <td class="text-left">
+                                    <i class="fa fa-pencil edit" (click)="editStep(step)" aria-hidden="true"></i>
+                                    <i class="fa fa-trash delete" (click)="showActionPopUp(DELETE,step)"
+                                        aria-hidden="true"></i>
+                                    <i ngbTooltip="Insert a record" (click)="addNewStep(step)" class="fa fa-plus add"
+                                        aria-hidden="true"></i>
+                                    <i ngbTooltip="move to down" (click)="showActionPopUp(SWAP,step,false)"
+                                        *ngIf="!isLast" class="fa fa-arrow-down arrow" aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                        </ng-container>
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+        <div class="step-container shadow mt-3 p-0">
+            <div class="row">
+                <div class="col">
+                    <div class="test">
+                        <button class="btn btn-primary mr-3" *ngIf="steps.length===0"
+                            (click)="addNewStep(currentStep)">Add
+                            New</button>
+                        <button class="btn btn-secondary mr-3" *ngIf="steps.length>0" (click)="reset()">Reset</button>
+                        <button class="btn btn-primary mr-3" *ngIf="steps.length>0"
+                            (click)="showActionPopUp(SUBMIT)">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup-container modal-md" *ngIf="showActionPopUP">
+        <div class="popup-header">
+          <a class="close" (click)="stepToDelete = null"><i class="fa fa-times" aria-hidden="true"></i></a>
+        </div>
+        <div class="popup-body">
+          <div class="warning-content">
+      
+            <div class="row">
+              <div class="col">
+                <h3>{{popUpHeader}}</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>{{popupNote}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-secondary" (click)="cancelPopUp()">Cancel</button>
+                <button class="btn btn-primary" (click)="proceedAction()">Ok</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>

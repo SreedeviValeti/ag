@@ -1,0 +1,37 @@
+<async-loader *ngIf="loading"></async-loader>
+<div row *ngIf="!loading" >
+    <div class="col-6" style="margin-top: 30px">
+        <h1  style="font-size: 30px; color: darkblue;" class="tab-title">Apply OS Patching</h1>
+    </div>
+    <div class="col-8">
+        <form class="content-container" [formGroup]="applyos" (ngSubmit)="applyOSPatching()">
+        <div class="col-6">
+            <div class="form-group">
+                <label class = "tab-title">AMI Type</label>
+                <select class="form-control" formControlName="os_type" (change)="amiType($event)" [(ngModel)]="amiwindows">
+                    <option *ngFor="let amitypes of amivaluestype" [value]="amitypes">{{amitypes}}</option>
+                </select>                 
+            </div>
+        </div>
+        <div  *ngIf= "amiwindows ==='windows' || amiwindows==='windows-psoft' ; else second"> 
+            <div class="col-6">
+                <div class="form-group">
+                    <label  class = "tab-title">Please Enter AMI ID</label>
+                    <input type="text" class="form-control" formControlName="amiid"  placeholder="AMI ID">
+                </div>
+            </div>
+        </div>
+        <ng-template #second>
+            <div class="col-6">
+                <div class="form-group">
+                    <label class = "tab-title">AMI ID</label>
+                    <select class="form-control" formControlName="amiid">
+                        <option *ngFor="let amiid of amivalues"  [value]="amiid.ImageId">{{amiid.ImageId}} {{amiid.AMIName}} {{amiid.CreationDate}}</option>
+                    </select>                              
+                </div>
+            </div>
+        </ng-template>
+        <button class="btn btn-primary button-color">OS Patching</button>    
+        </form>
+    </div>
+</div>

@@ -1,0 +1,165 @@
+<!-- <async-loader *ngIf="loading"></async-loader>
+<div class="table-container">
+<div class="row">
+        <h2>Linux Patches</h2>
+        <table class="table">
+            <tbody>
+                <tr *ngFor="let key of invresponse.LinuxPatches">
+                    <td>{{key}}
+                    </td>  
+                </tr>
+            </tbody>
+        </table>
+        <h2>Windows Patches</h2>
+        <table class="table">
+            <tbody>
+                <tr *ngFor="let key of invresponse.WindowsPatches">
+                    <td>{{key}}
+                    </td>  
+                </tr>
+            </tbody>
+        </table>
+    <div class="col">
+        <h2>Images Built</h2>
+        <table class="table table-hover">
+            <thead class="thead-light" >
+                <tr >
+                  <th> {{key}}
+                  </th>
+                </tr>
+                </thead>
+            <tbody  *ngFor="let invdatas of invresponse.ImagesBuilt">
+                <tr *ngFor="let keys of objectKeys(invdatas)">  
+                    <td>{{invdatas[keys]}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  </div> -->
+
+
+
+  <async-loader *ngIf="loading"></async-loader>
+  <div class="row col-12" style="margin-top: 10px;">
+    <div class="col-2">
+  <h2 style="color: darkblue;"> Linux Patches</h2>
+  <!-- <table mat-table [dataSource]="linuxSource" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of linuxdisplayedColumns">
+      <th mat-header-cell *matHeaderCellDef style="padding-left: 10px;"> {{column}} </th>
+      <td mat-cell *matCellDef="let element" style="text-align: center;"> {{element[column]}} </td>
+    </ng-container>
+  
+    <!-- <tr mat-header-row *matHeaderRowDef="linuxcolumnsToDisplay"></tr> -->
+    <!-- <tr style="height: 25px;" mat-row *matRowDef="let row; columns: linuxcolumnsToDisplay;"></tr>
+  </table>  -->
+  <table class="table">
+    <tbody>
+        <tr *ngFor="let key of invresponse.LinuxPatches">
+            <td style="padding: 0px; border-top: 0px;" >{{key}}
+            </td>  
+        </tr>
+    </tbody>
+</table>
+  </div>
+  <div class="col-2">
+  <h2 style="color: darkblue;"> Windows Patches</h2>
+  <table class="table">
+    <tbody>
+        <tr *ngFor="let key of invresponse.WindowsPatches">
+            <td style="padding: 0px; border-top: 0px;">{{key}}
+            </td>  
+        </tr>
+    </tbody>
+</table>
+</div>
+<div class="col-2">
+
+
+  <h2 style="color: darkblue;"> Nprd PS HOMES</h2>
+
+  <table class="table">
+    <tbody>
+        <tr *ngFor="let key of Nprddatasource">
+            <td style="padding: 0px; border-top: 0px;">{{key}}
+            </td>  
+        </tr>
+    </tbody>
+</table>
+
+   
+  </div>
+  <div class="col-2">
+    <h2 style="color: darkblue;"> Nprd APP HOMES</h2>
+    <table class="table">
+      <tbody>
+          <tr *ngFor="let key of NprdAPPHOMES">
+              <td style="padding: 0px; border-top: 0px;">{{key}}
+              </td>  
+          </tr>
+      </tbody>
+  </table>
+  </div>
+  <div class="col-2">
+    <h2 style="color: darkblue;"> Prod PS HOMES</h2>
+    <table class="table">
+      <tbody>
+          <tr *ngFor="let key of ProdPSHOMES">
+              <td style="padding: 0px; border-top: 0px;">{{key}}
+              </td>  
+          </tr>
+      </tbody>
+  </table>
+  </div>
+  <div class="col-2">
+    <h2 style="color: darkblue;"> Prod APP HOMES</h2>
+    <table class="table">
+      <tbody>
+          <tr *ngFor="let key of ProdAPPHOMES">
+              <td style="padding: 0px;border-top: 0px;">{{key}}
+              </td>  
+          </tr>
+      </tbody>
+  </table>
+  </div>
+  </div>
+  
+  <div *ngIf="awsredHatImagesDataSource!=undefined">
+  <h2 style="font-size: x-large; margin-top: 10px;color: darkblue;">AWS Red Hat Images</h2>
+  <table  style="margin-top: 10px;" mat-table [dataSource]="awsredHatImagesDataSource" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of awsredHatImagesdisplayedColumns">
+      <th  class="tablestyles" *matHeaderCellDef style="padding-left: 10px;"> {{column}} </th>
+      <td class="tabledatastyles"mat-cell *matCellDef="let element" style="text-align: center;"> {{element[column]}} </td>
+    </ng-container>
+    <tr mat-header-row style="height: 36px;" *matHeaderRowDef="awsredHatImagescolumnsToDisplay"></tr>
+    <tr mat-row style="height: 36px;" *matRowDef="let row; columns: awsredHatImagescolumnsToDisplay;"></tr>
+  </table>
+  </div>
+
+  <div *ngIf="AWSOracleLinuxImagesDataSource!=undefined">
+  <h2 style="font-size: x-large; margin-top: 10px ;color: darkblue;">AWS Oracle Linux Images</h2>
+  <table  style="margin-top: 10px;" mat-table [dataSource]="AWSOracleLinuxImagesDataSource" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of AWSOracleLinuxImagesdisplayedColumns">
+      <th class="tablestyles" mat-header-cell *matHeaderCellDef style="padding-left: 10px; font-weight: bold;"> {{column}} </th>
+      <td class="tabledatastyles" mat-cell *matCellDef="let element" style="text-align: center;"> {{element[column]}} </td>
+    </ng-container>
+    <tr mat-header-row style="height: 36px;" *matHeaderRowDef="AWSOracleLinuxImagescolumnsToDisplay"></tr>
+    <tr mat-row style="height: 36px;" *matRowDef="let row; columns: AWSOracleLinuxImagescolumnsToDisplay;"></tr>
+  </table>
+  </div>
+
+  <div *ngIf="dataSource!=undefined">
+  <h2 style="font-size: x-large;margin-top: 10px;color: darkblue;">Peoplesoft Images</h2>
+  <table  style="margin-top: 10px;" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns">
+      <th class="tablestyles" mat-header-cell *matHeaderCellDef style="padding-left: 10px; font-weight: bold;"> {{column}} </th>
+      <td class="tabledatastyles" mat-cell *matCellDef="let element" style="text-align: center;"> {{element[column]}} </td>
+    </ng-container>
+    <tr mat-header-row style="height: 36px;" *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row style="height: 36px;" *matRowDef="let row; columns: columnsToDisplay;"></tr>
+  </table>
+  </div>
+
+  
+

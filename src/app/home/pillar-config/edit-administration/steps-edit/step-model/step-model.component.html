@@ -1,0 +1,74 @@
+
+<async-loader *ngIf="validating">alidating</async-loader>
+<div *ngIf="step" [ngClass]="{'invalid': !step.valid }">
+    <div class="modal-header">
+      <h4 class="modal-title">Form</h4>
+      <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label>Step No</label>
+            <div>{{step.step}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="row" [ngClass]="{'invalid':!step.validExpectedTime}">
+        <div class="col" >
+          <div class="form-group">
+            <label>Expected Time</label>
+            <input type="number"  [(ngModel)]="step.expectedTime" value="step.expectedTime" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row"[ngClass]="{'invalid':!step.validInstance }">
+        <div class="col">
+          <div class="form-group">
+            <label>Instance Id</label>
+            <input type="text" [(ngModel)]="step.instanceID" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row" [ngClass]="{'invalid':!step.validStatus}">
+        <div class="col">
+          <div class="form-group">
+            <label>Status</label>
+            <input type="text" [(ngModel)]="step.status" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row" [ngClass]="{'invalid':!step.validOS }">
+        <div class="col">
+          <div class="form-group">
+            <label> OS (Operating system)</label>
+            <select class="form-control" [(ngModel)]="step.os">
+              <option *ngFor="let os of OSs"value="{{os}}">{{os}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row" [ngClass]="{'invalid':!step.validStepExecution}">
+        <div class="col">
+          <div class="form-group">
+            <label>Script execution</label>
+            <textarea class="form-control" [(ngModel)]="step.scriptExecution" cols="30" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row" [ngClass]="{'invalid':!step.validStepDescription}">
+        <div class="col">
+          <div class="form-group">
+            <label>description</label>
+            <textarea class="form-control" [(ngModel)]="step.stepDescription" cols="30" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancel</button>
+      <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+    </div>
+</div>

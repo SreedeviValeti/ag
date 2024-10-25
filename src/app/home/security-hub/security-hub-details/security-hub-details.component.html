@@ -1,0 +1,32 @@
+<h1  style="font-size: 25px; margin-top: 10px; color: darkblue;" class = "page-heading mb-1"> Security HUB Findings</h1>
+<div class="row">
+  <async-loader *ngIf="loading"></async-loader>
+  <div class="col-4">
+    <label class = "tab-title"> AWS Account ID</label> &nbsp;&nbsp;   :&nbsp;
+    <span>{{securityValues.AwsAccountId}}</span>
+  </div>
+  <div class="col-4">
+    <label class = "tab-title"> Region</label> &nbsp;&nbsp;   :&nbsp; 
+    <span>{{securityValues.Region}}</span>
+  </div>
+</div>
+<table class="table table-hover" style="margin-top: 10px;">
+    <thead class="thead-light">
+      <tr>
+        <th class="tablestyles" style="color: black;">Severity</th>
+        <th class="tablestyles" style="color: black;">Workflow Status</th>
+        <th class="tablestyles" style="color: black;">Record State</th>
+        <th class="tablestyles" style="color: black;">Title</th>
+        <th class="tablestyles" style="color: black;">Compliance Status</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let key of objectKeys(securityValues)">
+      <tr>
+        <td class="tablestyles">{{securityValues[key].Severity}}</td>
+        <td class="tablestyles">{{securityValues[key].WorkflowStatus}}</td>
+        <td class="tablestyles">{{securityValues[key].RecordState}}</td>
+        <td class="tablestyles">{{securityValues[key].Title}}</td>
+        <td class="tablestyles">{{securityValues[key].ComplianceStatus}}</td>
+    </tr>
+    </tbody>
+  </table>

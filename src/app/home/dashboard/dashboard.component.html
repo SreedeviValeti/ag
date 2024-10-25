@@ -1,0 +1,77 @@
+<div class="dashboard-container">
+  <div class="row">
+    <div class="col">
+      <h2 class="page-heading">Dashboard</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="table-container">
+        <table class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>Application</th>
+              <th>Environment</th>
+              <th>Status</th>
+              <th>Start/Stop</th>
+              <th>Uptime Schedule</th>
+              <th>Last Backup</th>
+              <th>Backup Policy</th>
+              <th>Last Refresh</th>
+              <th>Refresh Policy</th>
+              <th>Next Maintaince
+                <span class="secondary-text">( Tools Upgrade On )</span>
+              </th>
+              <!-- <th>Kibana Analytics</th> -->
+            </tr>
+          </thead>
+          <tbody *ngIf="loading">
+            <async-loader *ngIf="loading"> Please wait...</async-loader>
+          </tbody>
+          <tbody *ngIf="!loading">
+            <ng-container *ngFor=" let pillar of pillarlist">
+              <tr *ngFor=" let env of pillar.envList;first as isFirst">
+                <th *ngIf="isFirst" [attr.rowspan]="pillar.envList.length">{{pillar.pillarName}}</th>
+                <td>{{env.envName}}</td>
+                <ng-container *ngIf="env.statusLoaded">
+                  <td>
+                    <div [ngClass]="{'running': !env.processing, 'stopped':env.processing}">{{env.status}}</div>
+                  </td>
+                  <td class="text-center">
+                    <button  class="btn" (click)="envRefresh(env)">
+                      <i class="fa " [ngClass]="{'fa-stop-circle stop': !env.processing, 'fa-play-circle start':env.processing}"  aria-hidden="true"></i>
+                    </button>
+                  </td>
+
+                </ng-container>
+                <ng-container *ngIf="!env.statusLoaded">
+                  <td>
+                    <div class="checking">Checking...</div>
+                  </td>
+                  <td>--</td>
+
+                </ng-container>
+
+                <td>Full Time</td>
+                <td>15/12/2020</td>
+                <td>Weekly</td>
+                <td>{{lastRefreshDate.lastRefreshDateTime}}</td>
+                <td>Bi-Weekly</td>
+                <td>05/02/2022 20:00:23:00</td>
+                <!-- <div *ngIf="env.envName.includes('PRD')">             
+                <td><a href='http://hcmpum43.erpademos.com/psc/healthcenter/EMPLOYEE/HRMS/c/PTSF_SEARCH_ADMIN.PTSF_KIBANA_COMP.GBL?DBOARD=URLGEN&DASHBOARD=Health%20Center&' target="_blank"><i container="body" class="fa fa-external-link"
+                  aria-hidden="true"></i></a></td>
+                </div> -->
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <ul class="legends">
+          <li class="running">Running</li>
+          <li class="checking">Checking</li>
+          <li class="stopped">Stopped</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

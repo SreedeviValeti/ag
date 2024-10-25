@@ -1,0 +1,41 @@
+<div class="edit-admin-container">
+    <div class="row mb-0">
+        <div class="col">
+            <h2 class="page-heading mb-1">
+                <i class="fa fa-caret-left back-icon" ngbTooltip="Back to Env List Page" container="body"
+                    (click)="goToHomeEnvPage()"></i>
+                {{envronmentList.envname| uppercase}}</h2>
+        </div>
+    </div>
+    <ul class="primary-tabs mt-1">
+        <li (click)="onTabSelect(tab)" *ngFor="let tab of tabs"
+            [ngClass]="{'selected' : selectedTab?.name === tab.name}">{{tab.display}}</li>
+    </ul>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'env'">
+        <environmentdetails [envronmentList]="envronmentList" (triggerEnvLoad)="loadEnv()"> </environmentdetails>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'pwd'">
+        <password-management></password-management> 
+        </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'refreshsteps'">
+        <envmang-refresh-steps></envmang-refresh-steps>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'loadcache'">
+        <envmang-refresh-steps></envmang-refresh-steps>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'psactivities'">
+        <psactivity-status></psactivity-status>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'adhocpsactivities'">
+        <adhoc-ps-acitivity></adhoc-ps-acitivity>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'lorgetention'">
+        <log-retention></log-retention>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'buildmanagement'">
+        <environment-build></environment-build>
+    </div>
+    <div class="tab-container" *ngIf="selectedTab && selectedTab.name === 'exxecutescripts'">
+        <execute-scripts></execute-scripts>
+    </div>
+</div>

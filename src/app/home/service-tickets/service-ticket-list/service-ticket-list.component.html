@@ -1,0 +1,401 @@
+<div class="servicenow-list-container">
+  <div class="row">
+    <div class="col">
+        <h2 class="page-heading">Service Tickets<sup class="ph-sub-text">Total 24, Open 12, Close 6</sup></h2>
+    </div>
+  </div>
+  <div class="table-container">
+    <div class="row mb-2">
+      <div class="col-3">
+          <div class="form-group">
+              <label for="searchTable">Search</label>
+              <input id="searchTable" class="form-control" type="text" placeholder="Search By Ticket Id's"/>
+          </div>
+      </div>
+      <div class="col-4 offset-5 text-right">
+          <strong class="clickable" (click)="showCreatePage = true">Create New Ticket</strong>
+          <i class="fa fa-plus-square-o add-new" aria-hidden="true" ngbTooltip="Create New Ticket" container="body" (click)="showCreatePage = true"></i>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1"></label>
+                </div>
+              </th>
+              <th>Status</th>
+              <th>Ticket#</th>
+              <th>Redirect</th>
+              <th>Application</th>
+              <th>Created By</th>
+              <th>Created Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr [class.editable]="isEditing">
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1"></label>
+                </div>
+              </td>
+              <td>
+                <div class="status open" *ngIf="!isEditing">Open</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <select name="Status" id="ticketStatus" class="form-control">
+                    <option default>Status</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                    <option value="inprogres">In Progress</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing">ERPA-24189</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Ticket ID">
+                </div>
+              </td>
+              <td>
+                <a href="#" class="link" *ngIf="!isEditing">Sales Force Link</a>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Redirect Link">
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing"> PeopleSoft </div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Application">
+                </div>
+              </td>
+              <td>Mahesh  Velupuri</td>
+              <td>Dec 16, 2020</td>
+              <td>
+                  <i class="fa fa-pencil" *ngIf="!isEditing" aria-hidden="true" (click)="isEditing = true" ngbTooltip="Edit" container="body"></i>
+                  <i class="fa fa-ban" *ngIf="isEditing"  aria-hidden="true" (click)="isEditing = false" ngbTooltip="Cancel" container="body"></i>
+                  <i class="fa fa-floppy-o" *ngIf="isEditing" aria-hidden="true" (click)="isEditing = false" ngbTooltip="Save" container="body"></i>
+              </td>
+            </tr>
+            <tr [class.editable]="isEditing">
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1"></label>
+                </div>
+              </td>
+              <td>
+                <!-- total three states defined 1. Open - class name open, 2. Closed - class name closed, 3. In Progress  - class name in-progress. -->
+                <div class="status closed" *ngIf="!isEditing">Closed</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <select name="Status" id="ticketStatus" class="form-control">
+                    <option default>Status</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                    <option value="inprogres">In Progress</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing">ERPA-24188</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Ticket ID">
+                </div>
+              </td>
+              <td>
+                <a href="#" class="link" *ngIf="!isEditing">Sales Force Link</a>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Redirect Link">
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing"> PeopleSoft </div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Application">
+                </div>
+              </td>
+              <td>Gagenaapelly Yugendhar</td>
+              <td>Dec 14, 2020</td>
+              <td>
+                  <i class="fa fa-pencil" *ngIf="!isEditing" aria-hidden="true" (click)="isEditing = true" ngbTooltip="Edit" container="body"></i>
+                  <i class="fa fa-ban" *ngIf="isEditing"  aria-hidden="true" (click)="isEditing = false" ngbTooltip="Cancel" container="body"></i>
+                  <i class="fa fa-floppy-o" *ngIf="isEditing" aria-hidden="true" (click)="isEditing = false" ngbTooltip="Save" container="body"></i>
+              </td>
+            </tr>
+            <tr [class.editable]="isEditing">
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1"></label>
+                </div>
+              </td>
+              <td>
+                <div class="status in-progress" *ngIf="!isEditing">In Progress</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <select name="Status" id="ticketStatus" class="form-control">
+                    <option default>Status</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                    <option value="inprogres">In Progress</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing">ERPA-24187</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Ticket ID">
+                </div>
+              </td>
+              <td>
+                <a href="#" class="link" *ngIf="!isEditing">Sales Force Link</a>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Redirect Link">
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing"> PeopleSoft </div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Application">
+                </div>
+              </td>
+              <td>Purna chandra reddy Chamala</td>
+              <td>Dec 10, 2020</td>
+              <td>
+                  <i class="fa fa-pencil" *ngIf="!isEditing" aria-hidden="true" (click)="isEditing = true" ngbTooltip="Edit" container="body"></i>
+                  <i class="fa fa-ban" *ngIf="isEditing"  aria-hidden="true" (click)="isEditing = false" ngbTooltip="Cancel" container="body"></i>
+                  <i class="fa fa-floppy-o" *ngIf="isEditing" aria-hidden="true" (click)="isEditing = false" ngbTooltip="Save" container="body"></i>
+              </td>
+            </tr>
+            <tr [class.editable]="isEditing">
+                <td>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="status open" *ngIf="!isEditing">Open</div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <select name="Status" id="ticketStatus" class="form-control">
+                      <option default>Status</option>
+                      <option value="open">Open</option>
+                      <option value="closed">Closed</option>
+                      <option value="inprogres">In Progress</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!isEditing">ERPA-24186</div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Ticket ID">
+                  </div>
+                </td>
+                <td>
+                  <a href="#" class="link" *ngIf="!isEditing">Sales Force Link</a>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Redirect Link">
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!isEditing"> PeopleSoft </div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Application">
+                  </div>
+                </td>
+                <td>Purna chandra reddy Chamala</td>
+                <td>Dec 09, 2020</td>
+                <td>
+                    <i class="fa fa-pencil" *ngIf="!isEditing" aria-hidden="true" (click)="isEditing = true" ngbTooltip="Edit" container="body"></i>
+                    <i class="fa fa-ban" *ngIf="isEditing"  aria-hidden="true" (click)="isEditing = false" ngbTooltip="Cancel" container="body"></i>
+                    <i class="fa fa-floppy-o" *ngIf="isEditing" aria-hidden="true" (click)="isEditing = false" ngbTooltip="Save" container="body"></i>
+                </td>
+              </tr>
+              <tr [class.editable]="isEditing">
+                <td>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1"></label>
+                  </div>
+                </td>
+                <td>
+                  <!-- total three states defined 1. Open - class name open, 2. Closed - class name closed, 3. In Progress  - class name in-progress. -->
+                  <div class="status closed" *ngIf="!isEditing">Closed</div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <select name="Status" id="ticketStatus" class="form-control">
+                      <option default>Status</option>
+                      <option value="open">Open</option>
+                      <option value="closed">Closed</option>
+                      <option value="inprogres">In Progress</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!isEditing">ERPA-24185</div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Ticket ID">
+                  </div>
+                </td>
+                <td>
+                  <a href="#" class="link" *ngIf="!isEditing">Sales Force Link</a>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Redirect Link">
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!isEditing"> PeopleSoft </div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Application">
+                  </div>
+                </td>
+                <td>Gagenaapelly Yugendhar</td>
+                <td>Dec 08, 2020</td>
+                <td>
+                    <i class="fa fa-pencil" *ngIf="!isEditing" aria-hidden="true" (click)="isEditing = true" ngbTooltip="Edit" container="body"></i>
+                    <i class="fa fa-ban" *ngIf="isEditing"  aria-hidden="true" (click)="isEditing = false" ngbTooltip="Cancel" container="body"></i>
+                    <i class="fa fa-floppy-o" *ngIf="isEditing" aria-hidden="true" (click)="isEditing = false" ngbTooltip="Save" container="body"></i>
+                </td>
+              </tr>
+              <tr [class.editable]="isEditing">
+                <td>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1"></label>
+                  </div>
+                </td>
+                <td>
+                  <div class="status in-progress" *ngIf="!isEditing">In Progress</div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <select name="Status" id="ticketStatus" class="form-control">
+                      <option default>Status</option>
+                      <option value="open">Open</option>
+                      <option value="closed">Closed</option>
+                      <option value="inprogres">In Progress</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!isEditing">ERPA-24185</div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Ticket ID">
+                  </div>
+                </td>
+                <td>
+                  <a href="#" class="link" *ngIf="!isEditing">Sales Force Link</a>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Redirect Link">
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="!isEditing"> PeopleSoft </div>
+                  <div class="form-group" *ngIf="isEditing">
+                    <input type="text" class="form-control" placeholder="Application">
+                  </div>
+                </td>
+                <td>Gagenaapelly Yugendhar</td>
+                <td>Dec 07, 2020</td>
+                <td>
+                    <i class="fa fa-pencil" *ngIf="!isEditing" aria-hidden="true" (click)="isEditing = true" ngbTooltip="Edit" container="body"></i>
+                    <i class="fa fa-ban" *ngIf="isEditing"  aria-hidden="true" (click)="isEditing = false" ngbTooltip="Cancel" container="body"></i>
+                    <i class="fa fa-floppy-o" *ngIf="isEditing" aria-hidden="true" (click)="isEditing = false" ngbTooltip="Save" container="body"></i>
+                </td>
+              </tr>
+          </tbody>
+        </table>
+        <div class="legends">
+          <ul>
+            <li>
+              <div class="status open">Open</div>
+            </li>
+            <li>
+                <div class="status in-progress">In Progress</div>
+            </li>
+            <li>
+                <div class="status closed">Closed</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="d-flex justify-content-between py-2">
+          <!-- <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize" (pageChange)="refreshCountries()">
+          </ngb-pagination>
+          <select class="custom-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCountries()">
+            <option [ngValue]="2">2 items per page</option>
+            <option [ngValue]="4">4 items per page</option>
+            <option [ngValue]="6">6 items per page</option>
+          </select> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" *ngIf="showCreatePage"></div>
+
+<div class="panel-wrap shadow" *ngIf="showCreatePage"[class.wrap]="showCreatePage">
+  <div class="panel">
+    <div class="create-container">
+      <div class="row">
+        <div class="col">
+            <h2 class="page-heading">Create New Ticket</h2>
+        </div>
+      </div>
+      <div class="form">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="createNewStatus">Ticket Status</label>
+              <select name="" id="createNewStatus" class="form-control">
+                <option value="" >Select Status</option>
+                <option value="open">Open</option>
+                <option value="cloased">Closed</option>
+                <option value="inprogress">In Progress</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="createNewDesc">Ticket Description</label>
+              <textarea name="" id="createNewDesc" cols="30" rows="10">Please enter some Description</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="createNewRedirect">Redirect Link</label>
+              <input type="text" id="createNewRedirect" placeholder="Redirect Link" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="createNewApp">Application</label>
+              <input type="text" id="createNewApp" placeholder="Application" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-container">
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-secondary" (click)="showCreatePage = false">Cancel</button>
+          </div>
+          <div class="col text-right">
+            <button class="btn btn-primary" (click)="showCreatePage = false">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

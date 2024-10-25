@@ -1,0 +1,790 @@
+<async-loader *ngIf="loading"></async-loader>
+<div class="environment-container" [hidden]="!activityProcessing ">
+  <div class="row">
+    <div class="col-6">
+      <h2 class="page-heading">
+        <i class="fa fa-caret-left" ngbTooltip="Back to Env List Page" container="body" (click)="goToHomeEnvPage()"></i>
+        {{envData?.envName | uppercase}}
+      </h2>
+    </div>
+    <div class="col-6 text-right">
+
+      <button class="btn-sm icon refresh shadow-sm" ngbTooltip="Check Environment Refresh Status" container="body"
+        (click)="getTabActivityStatus()"
+        [ngClass]="{'disabled':!disableRefreshButtonFlag, 'enabled':disableRefreshButtonFlag}">
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="content-container border shadow-sm">
+        <div class="center" *ngIf="activityDescription">
+          <p>{{activityDescription}}</p>
+          <p><strong>Current Status</strong>: {{envRefreshObj.currentStatus}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="environment-container" [hidden]="activityProcessing">
+  <div class="row">
+    <div class="col-6">
+      <h2 class="page-heading">
+        <i class="fa fa-caret-left" ngbTooltip="Back to Env List Page" container="body" (click)="goToHomeEnvPage()"></i>
+        {{envData?.envName | uppercase}}
+        <i class="fa fa-refresh refresh" ngbTooltip="Get All Status" container="body" (click)="getStatuses()"></i>
+      </h2>
+      <p class="sub-text" [ngClass]="{'hideRefAndStatusButton':hideRefAndStatusButton}">
+        <strong> Last Refreshed on {{lastRefreshDateTime}} </strong>
+      </p>
+    </div>
+
+  </div>
+
+  <ul class="primary-tabs mt-3">
+    <li *ngFor="let tab of tabs" [ngClass]="{'selected': selectedTab === tab.title}" (click)="selectedTab = tab.title">
+      {{tab.desc}}
+    </li>
+  </ul>
+  <div class="row" *ngIf="envMeta">
+    <div class="col">
+      <div class="content-container border shadow-sm">
+
+        <div [hidden]="selectedTab !== 'details'">
+          <div class="row mb-2">
+            <div class="col">
+              <div class="toggle-selection">
+                Expand / Collapse All
+                <label class="switch">
+                  <input type="checkbox" checked (change)="collapseExpandServers($event)">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="hoz-saperator mb-3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="content-row">
+            <div class="row">
+              <div class="col">
+                <div class="card" *ngFor="let app of envData.appData ">
+                  <ng-container *ngIf="!app.servers">
+                    <div class="card-header">
+                      {{app.appName}} </div>
+
+                  </ng-container>
+                  <div *ngFor="let server  of app.servers">
+                    <div class="card-header" (click)="server.show = !server.show">
+                      <strong>
+                        <span>
+                          {{app.appName}} | {{server.hostName}}
+                        </span>
+                      </strong>
+                      <i class="fa" aria-hidden="true"
+                        [ngClass]="{'fa-minus-square-o': server.show , 'fa-plus-square-o': !server.show }"></i>
+                    </div>
+                    <div class="card-body" *ngIf="server.show">
+                      <div class="row" *ngFor="let domain  of server.domains;">
+                        <div class="col">
+                          <div class="servers">
+                            <span class="server-name"> {{domain.domainName | uppercase}}</span>
+                            <div class="no-data text-truncate loading-block" *ngIf="!domain.statusLoaded">
+                              Please Wait while we fetch the Data
+                              <app-inline-loader class="loading-block"></app-inline-loader>
+                            </div>
+
+                            <div class="no-data text-truncate loading-block" *ngIf="domain.scriptProgressing">
+                              {{domain.description}}
+                              <app-inline-loader class="loading-block"></app-inline-loader>
+                              <i class="fa fa-refresh refresh" (click)="getStatus(domain.referenceId)"
+                                aria-hidden="true"></i>
+                            </div>
+                            <div class="no-data text-truncate"
+                              *ngIf="domain.statusLoaded && domain.error && !app.disableDomain && !domain.scriptProgressing">
+                              Information not available
+                              <i class="fa fa-refresh refresh" (click)="getStatus(domain.referenceId)"
+                                aria-hidden="true"></i>
+                            </div>
+
+                            <div class="d-inline" [class.disabled]="app.disableDomain"
+                              *ngIf="domain.statusLoaded && (!domain.error || app.disableDomain) && !domain.scriptProgressing">
+                              <span class="badge btn-right center"
+                                [ngClass]="{'badge-danger':domain.stopped, 'badge-success':!domain.stopped,'badgedanger':domain.stopped, 'badgesuccess':!domain.stopped}">
+                                <i class="fa fa-check-circle-o " *ngIf="!domain.stopped" aria-hidden="true"></i>
+                                <i class="fa fa-minus-circle" *ngIf="domain.stopped" aria-hidden="true"></i>
+                                {{domain.stopped?'Stopped':'Running'}}
+                              </span>
+                              <button class="btn btn-outline-primary btn-sm ripple"
+                                [ngClass]="{'disabled':domain.started}" (click)="enableDomainModal( domain, 'Start')">
+                                <i class="fa fa-play" aria-hidden="true"></i> Start
+                              </button>
+                              <button class="btn btn-outline-primary btn-sm ripple"
+                                [ngClass]="{'disabled':domain.stopped}" (click)="enableDomainModal( domain, 'Stop')">
+                                <i class="fa fa-stop" aria-hidden="true"></i> Stop
+                              </button>
+                              <button class="btn btn-outline-primary btn-sm ripple"
+                              [ngClass]="{'disabled':domain.stopped}" (click)="enableDomainModal( domain, 'PFAStatus')">
+                              <i class="fa fa-stop" aria-hidden="true"></i> PSA Status
+                            </button>
+                              <button class="btn btn-outline-primary btn-sm ripple"
+                                [ngClass]="{'disabled':domain.restarted}"
+                                (click)="enableDomainModal(domain, 'Restart')">
+                                <i class="fa fa-refresh" aria-hidden="true"></i> Restart
+                              </button>
+                              <button class="btn btn-outline-primary btn-sm ripple"
+                                [ngClass]="{'disabled':domain.clearCacheRestart}"
+                                (click)="enableDomainModal( domain, 'Clear Cache Restart')">
+                                <i class="fa fa-refresh" aria-hidden="true"></i> Clear Cache Restart
+                              </button>
+                            </div>
+
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div [hidden]="selectedTab !== 'logManagement'">
+          <div class="row">
+            <div class="col-6">
+              <h5 class="tab-title">Set Log File Retention Policy (No. Of Days)</h5>
+            </div>
+            <div class="col-2 text-right">
+              <i class="fa fa-times mr-3" *ngIf="editLogfile" aria-hidden="true" ngbTooltip="Cancel the Changes"
+                (click)="editLogfile = !editLogfile"></i>
+              <i *ngIf="editLogfile" (click)="editLogfile = !editLogfile" class="fa fa-floppy-o" aria-hidden="true"
+                ngbTooltip="Save the Config"></i>
+              <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="Logfile Management"
+                (click)="editLogfile = !editLogfile" *ngIf="!editLogfile"></i>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-8">
+              <div class="content-enabled" [class.content-disabled]="!editLogfile">
+                <table class="table mb-0">
+                  <thead class="thead-light">
+                    <tr>
+                      <th></th>
+                      <th>Archive After(No. Of Days)</th>
+                      <th>Purge After (No. Of Days)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>App Server Logs</td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logArchiveDays">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logPurgeDays">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Web Server Logs</td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logArchiveDays">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logPurgeDays">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Batch Server Logs</td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logArchiveDays">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logPurgeDays">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>IB Server Logs</td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logArchiveDays">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logPurgeDays">
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>DB Server Logs</td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logArchiveDays">
+                        </div>
+                      </td>
+                      <td>
+                        <div class="form-group mb-0">
+                          <input class="form-control" [(ngModel)]="logPurgeDays">
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row mt-4">
+            <div class="col-6">
+              <h5 class="tab-title">Uptime Policy</h5>
+            </div>
+            <div class="col-2 text-right">
+              <i class="fa fa-times mr-3" *ngIf="editSPolicy" aria-hidden="true" ngbTooltip="Cancel the Changes"
+                (click)="editSPolicy = !editSPolicy"></i>
+              <i *ngIf="editSPolicy" (click)="editSPolicy = !editSPolicy" class="fa fa-floppy-o" aria-hidden="true"
+                ngbTooltip="Save the Policy Changes"></i>
+              <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="Modify Backup Policy"
+                (click)="editSPolicy = !editSPolicy" *ngIf="!editSPolicy"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <p class="mt-1 mb-2 gray-text">Pick a schedule to run the application.</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <ul class="inline-list content-enabled" [class.content-disabled]="!editSPolicy">
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="schedule"> Week Days
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="schedule"> Working Hours
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" checked="true" name="schedule"> Always
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row my-3">
+            <div class="col-8 text-center">
+              <button class="btn btn-outline-primary" (click)="openModal(contentRecycleNow, 'md')"><i
+                  class="fa fa-recycle" aria-hidden="true"></i>
+                Recycle Now</button>
+            </div>
+          </div> -->
+        </div>
+        <div [hidden]="selectedTab !== 'uptimePolicy'">
+        <div class="row mt-4">
+          <div class="col-6">
+            <h5 class="tab-title">Uptime Policy</h5>
+          </div>
+          <div class="col-2 text-right">
+            <i class="fa fa-times mr-3" *ngIf="editSPolicy" aria-hidden="true" ngbTooltip="Cancel the Changes"
+              (click)="editSPolicy = !editSPolicy"></i>
+            <i *ngIf="editSPolicy" (click)="editSPolicy = !editSPolicy" class="fa fa-floppy-o" aria-hidden="true"
+              ngbTooltip="Save the Policy Changes"></i>
+            <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="Modify UpTime Policy"
+              (click)="editSPolicy = !editSPolicy" *ngIf="!editSPolicy"></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <p class="mt-1 mb-2 gray-text">Pick a schedule to run the application.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <ul class="inline-list content-enabled" [class.content-disabled]="!editSPolicy">
+              <li>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="schedule"> Week Days
+                  </label>
+                </div>
+              </li>
+              <li>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="schedule"> Working Hours
+                  </label>
+                </div>
+              </li>
+              <li>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" checked="true" name="schedule"> Always
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col-8 text-center">
+            <button class="btn btn-outline-primary" (click)="openModal(contentRecycleNow, 'md')"><i
+                class="fa fa-recycle" aria-hidden="true"></i>
+              Recycle Now</button>
+          </div>
+        </div>
+        </div>
+        <div [hidden]="selectedTab !== 'loadCache'">
+   
+            <loadcache [envData]="envMeta" 
+            (postRefresh)="postRefresh($event)"
+            (showRefreshModel)="showRefreshModel($event)"></loadcache>
+        </div>
+
+        <div [hidden]="selectedTab !== 'backup'">
+          <div class="row">
+            <div class="col-6">
+              <h5 class="tab-title">Backup</h5>
+            </div>
+            <div class="col-2 text-right">
+              <i class="fa fa-times mr-3" *ngIf="editBackupConfig" aria-hidden="true" ngbTooltip="Cancel the Changes"
+                (click)="editBackupConfig = !editBackupConfig"></i>
+              <i *ngIf="editBackupConfig" (click)="editBackupConfig = !editBackupConfig" class="fa fa-floppy-o"
+                aria-hidden="true" ngbTooltip="Save the configuration Changes"></i>
+              <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="Modify Backup Configuration"
+                (click)="editBackupConfig = !editBackupConfig" *ngIf="!editBackupConfig"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <p class="mt-1 mb-2 gray-text">Last Backup taken on <b>23/11/2020 20:02:11 IST</b></p>
+            </div>
+            <div class="col-8">
+              <ul class="inline-list content-enabled" [class.content-disabled]="!editBackupConfig">
+                <li class="gray-text">Backup Type:</li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" checked="true" name="backupType"> Full Stack
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="backupType"> DB Only
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="backupType"> App Config Only
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col-6">
+              <h5 class="tab-title">Backup Policy</h5>
+            </div>
+            <div class="col-2 text-right">
+              <i class="fa fa-times mr-3" *ngIf="editBackup" aria-hidden="true" ngbTooltip="Cancel the Changes"
+                (click)="editBackup = !editBackup"></i>
+              <i *ngIf="editBackup" (click)="editBackup = !editBackup" class="fa fa-floppy-o" aria-hidden="true"
+                ngbTooltip="Save the Backup Policy Changes"></i>
+              <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="Modify UPTime Policy"
+                (click)="editBackup = !editBackup" *ngIf="!editBackup"></i>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <p class="mt-1 mb-2 gray-text">Pick a backup policy :</p>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-8">
+
+              <ul class="inline-list content-enabled " [class.content-disabled]="!editBackup">
+                <li class="gray-text fullrightmargin">Full:</li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="full"> Manual
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="full"> Nightly
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" checked="true" name="full"> Weekly
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="full"> Monthly
+                    </label>
+                  </div>
+                </li>
+              </ul>
+
+
+              <ul class="inline-list content-enabled" [class.content-disabled]="!editBackup">
+                <li class="gray-text">Incremental:</li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="incremental"> Never
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="incremental"> Nightly
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" checked="true" name="incremental"> Weekly
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="incremental"> Monthly
+                    </label>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="form-inline">
+                Backup Retention (# of days) :<input class="ml-1" type="text" value="60 Days">
+              </div>
+              <!--</div>-->
+            </div>
+          </div>
+          <div class="row my-4">
+            <div class="col-8 text-center">
+              <button class="btn btn-outline-primary" (click)="openModal(contentBackupConfig, 'sm');
+              backupTitle = 'Backup Now';">
+                <i class="fa  fa-hdd-o" aria-hidden="true"></i>
+                Backup Now
+              </button>
+            </div>
+          </div>
+        </div>
+        <div [hidden]="selectedTab !== 'refresh'">
+            <refresh [envData]="envMeta"
+            (postRefresh)="postRefresh($event)"
+            (showRefreshModel)="showRefreshModel($event)"></refresh>
+        </div>
+
+        <div [hidden]="selectedTab !== 'database'">
+          <database [envData]="envMeta"
+          ></database>
+      </div>
+      <!-- <div [hidden]="selectedTab !== 'Patching'"> -->
+
+    <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="popup-container modal-md" *ngIf="displayDomainModal">
+  <div class="popup-header">
+    <a class="close" (click)="disableDomainModal()"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <!-- <div class="row">
+        <div class="col">
+          <img src="assets/images/error-cloud.png" class="warning">
+        </div>
+      </div> -->
+      <div class="row">
+        <div class="col">
+          <h3>Domain {{getAction()}}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p> Are you sure you want to {{getAction()}} the domain?</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-secondary" (click)="disableDomainModal()">Cancel</button>
+          <button class="btn btn-primary"  (click)="domainActionExecution()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="displayRefreshModal">
+  <div class="popup-header">
+    <a class="close" (click)="displayRefreshModal = !displayRefreshModal"><i class="fa fa-times"
+        aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <div class="row">
+        <div class="col">
+          <img src="assets/images/error-cloud.png" class="warning">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h3> {{refreshHeader}}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p>{{refreshMsg}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+            <div class="form-group">
+             <!--    <label>Pass Phrase</label> -->
+                <input   placeholder="Enter Pass Phrase" type="text" [formControl] = "passPhrase" class="form-control">
+            </div>
+        </div>
+    </div>
+     
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-secondary" (click)="disableRefreshModal()">Cancel</button>
+          <button class="btn btn-primary" 
+          
+          [ngClass]="{'disabled':!enableRefreshBtn}" 
+          
+          (click)="envRefresh()">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #contentRecycleNow let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Select The Servers To Bounce</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="mb-1"><b>Bounce Type</b> :</p>
+    <ul class="mb-3">
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="BounceType"> Parallel Bounce
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="BounceType"> Rolling Bounce
+          </label>
+        </div>
+      </li>
+    </ul>
+    <p class="mb-1"><b>Server Type</b> :</p>
+    <ul>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="PIAServer">PIA Server
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="IBServer">IB Server
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="BatchServer">Batch Server
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="Database">Database
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary">Bounce</button>
+  </div>
+</ng-template>
+
+<ng-template #contentBackupConfig let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{backupTitle}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="mb-1"><b>BackUp Type :</b> :</p>
+    <ul>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="backupType"> Full Stack
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="backupType"> DB Only
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="backupType"> App Config Only
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #contentRefreshConfig let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">{{refreshHeading}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-inline mb-3">
+      <b>Source:</b>
+      <select class="form-control ml-1 mr-3">
+        <option>Option 1</option>
+      </select>
+      <b>Target:</b>
+      <input type="text" class="form-control ml-1">
+    </div>
+    <p class="mb-1"><b>Refresh Type:</b></p>
+    <ul>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="backupType"> Full Stack
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="backupType"> DB Only
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="backupType"> App Config Only
+          </label>
+        </div>
+      </li>
+      <li class="mt-2">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="refreshTasks"> Perform Pre/Post Refresh Tasks
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="preserveTarget"> Preserve Target PIA Config
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="preserveTargetSecurity"> Preserve Target Security
+          </label>
+        </div>
+      </li>
+      <li>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" value="maskSensitiveData">Mask Sensitive Data
+          </label>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary">Refresh</button>
+  </div>
+</ng-template>

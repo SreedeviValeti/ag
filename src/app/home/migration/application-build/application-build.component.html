@@ -1,0 +1,61 @@
+<async-loader *ngIf="loading"></async-loader>
+<div row *ngIf="!loading" >    
+        <div class="col-6" style="margin-top: 30px">
+        <h1  style="font-size: 30px; color: darkblue;" class="tab-title">Application Build</h1>
+      </div>
+      <div class="col-8">
+    <form class="content-container"  [formGroup]="appBuildForm"  (ngSubmit)="appBuild()" >
+        <div class="col-6"> 
+            <div>
+                <div class="form-group">
+                    <label  class = "tab-title">Client</label>
+                    <input type="text" class="form-control" formControlName="client">
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                    <label  class = "tab-title">Organization ID</label>
+                    <input type="text" class="form-control" formControlName="orgid">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label  class = "tab-title">Project Code</label>
+                    <input type="text" class="form-control" formControlName="project_code">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                        <label  class = "tab-title">Application</label>
+                        <select class="form-control" formControlName="application">
+                            <option *ngFor="let appval of applicationValues" [value]="appval">{{appval}}</option>
+                        </select>                          
+                     </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label  class = "tab-title">Requester Email</label>
+                        <input type="text" class="form-control" formControlName="requester_email" placeholder="Requester Email"  [(ngModel)]="emial" disabled>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                            <label  class = "tab-title">Environment Type</label>
+                            <select class="form-control" formControlName="envtype">
+                                <option *ngFor="let env of environments" [value]="env">{{env}}</option>
+                            </select>                      </div>
+                    </div>
+                    
+
+
+        <a href="https://erpa.scalr.io/#/19047/env-u8he1pc0piovhsg/workspaces/variables?workspaceId=ws-u8he25urulfbahg" target="_blank"
+        width=200
+        height=200 
+         (click)="appBuild()"  class="GFG"type="submit" class="btn btn-primary button-color" > 
+ Build
+        <!-- <button style="margin-left: 15px" class="GFG"type="submit" class="btn btn-primary" >Create</button>   -->
+        </a>  
+    </form>
+    </div>
+</div>

@@ -1,0 +1,258 @@
+<div class="env-container">
+  <async-loader *ngIf="loading"></async-loader>
+  <div class="create-container">
+    <div class="row">
+      <div class="col">
+        <h5 class="mb-3">{{envData.envName}}</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>please Add new Application</p>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-4">
+        <div class="form-group">
+          <label for="appName">Enter Application Name</label>
+          <input id="appName" type="text" class="form-control" name="applicationName" [(ngModel)]="newAppName"
+            placeholder="Application Name">
+        </div>
+      </div>
+      <div class="col-1">
+        <i ngbTooltip="Add Application" class="fa fa-plus-circle add-icon" aria-hidden="true"
+          (click)="addapplication()"></i>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="envData.appData">
+      <div class="col">
+        <div class="card" *ngFor="let app of envData.appData">
+          <div class="card-header clickable">
+            <div class="row">
+              <div class="col-11">
+                <span *ngIf="!app.edit">
+                  {{app.appName}}
+                </span>
+                <span *ngIf="app.edit">
+                  <div class="form-group mr-3 custom-width">
+                    <input id="envName" type="text" placeholder="Edit Env Name" [(ngModel)]="app.appNameNew"
+                      class="form-control h-20">
+                  </div>
+                  <i class="fa fa-times mr-2 rem" aria-hidden="true" ngbTooltip="Cancel the Changes"
+                    (click)="app.edit = !app.edit"></i>
+                  <i (click)="updateApp( app)" class="fa fa-floppy-o rem" aria-hidden="true"
+                    ngbTooltip="Save the Environment name Changes"></i>
+                </span>
+                <i class="fa fa-pencil ml-3" aria-hidden="true" ngbTooltip="Modify  {{app.appName}}"
+                  (click)="app.edit = !app.edit" *ngIf="!app.edit"></i>
+                <i class="fa fa-trash ml-2" aria-hidden="true" ngbTooltip="Delete the  {{app.appName}}"
+                  *ngIf="!app.edit" (click)="showDeleteAppPopup(envData,app)"></i>
+              </div>
+              <div class="col-1 text-right" (click)="toggleApp(app)">
+                <i [ngClass]="{'fa-plus-square': !app.toggleApp, 'fa-minus-square': app.toggleApp}" class="fa clickable"
+                  aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="loading-block" *ngIf="app.loading">
+              <app-inline-loader class="loading-block"></app-inline-loader>
+            </div>
+          </div>
+          <div class="card-body" *ngIf="app.toggleApp">
+            <p>Please Add New Server</p>
+            <div class="row mb-3">
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Server Name</label>
+                  <input type="text" class="form-control" name="serverName" [(ngModel)]="hostName">
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="form-group">
+                  <label>Instance Id</label>
+                  <input type="text" class="form-control" name="instanceID" [(ngModel)]="instanceID">
+                </div>
+              </div>
+
+         <!--      <div class="col-3">
+                <div class="form-group">
+                  <label> Target Accounts</label>
+                  <select class="form-control" [(ngModel)]="app.targetAccount">
+                    <option *ngFor="let targetAccount of targteAccounts" value="{{targetAccount}}">{{targetAccount}}
+                    </option>
+                  </select>
+                </div>
+              </div> -->
+
+
+              <div class="col-1">
+                <i ngbTooltip="Add Server" class="fa fa-plus-circle add-icon" aria-hidden="true"
+                  (click)="createInstance(app)"></i>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="card" *ngFor="let server of app.servers">
+                  <div class="card-header clickable">
+                    <div class="row">
+                      <div class="col-11">
+                        <span *ngIf="!server.edit">
+                          {{server.hostName}} | {{server.instanceID}}
+                        </span>
+                        <span *ngIf="server.edit">
+                          <div class="form-group mr-3 custom-width">
+                            <input type="text" placeholder="Edit Server Name" [(ngModel)]="server.hostNameNew"
+                              class="form-control h-20">
+                          </div>
+                          <div class="form-group mr-3 custom-width">
+                            <input type="text" placeholder="Edit Server Instance Id" [(ngModel)]="server.instanceIDNew"
+                              class="form-control h-20">
+                          </div>
+                     <!--      <div class="form-group mr-3 custom-width">
+                            <select class="form-control" placeholder="Edit Target Account" [(ngModel)]="server.targetAccountNew">
+                              <option *ngFor="let targetAccount of targteAccounts" value="{{targetAccount}}">{{targetAccount}}
+                              </option>
+                            </select>
+                          </div> -->
+                          <i class="fa fa-times mr-2 rem" aria-hidden="true" ngbTooltip="Cancel the Changes"
+                            (click)="server.edit = !server.edit"></i>
+                          <i (click)="updateServer(app,server)" class="fa fa-floppy-o rem" aria-hidden="true"
+                            ngbTooltip="Save the Server Name changes"></i>
+                        </span>
+                        <i class="fa fa-pencil ml-3" aria-hidden="true" ngbTooltip="Modify  {{server.hostName}}"
+                          (click)="server.edit = !server.edit" *ngIf="!server.edit"></i>
+                        <i class="fa fa-trash ml-2" aria-hidden="true" ngbTooltip="Delete the  {{server.hostName}}"
+                          *ngIf="!server.edit" (click)="showDeleteAppPopup(app,server)"></i>
+                      </div>
+                      <div class="col-1 text-right" (click)="toggleServer(server) ">
+                        <i [ngClass]="{'fa-plus-square': !server.toggleServer, 'fa-minus-square': server.toggleServer}"
+                          class="fa clickable" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                    <div class="loading-block" *ngIf="server.loading">
+                      <app-inline-loader class="loading-block"></app-inline-loader>
+                    </div>
+                  </div>
+
+                  <div class="card-body" *ngIf="server.toggleServer">
+                    <p>Please Add Domain Details</p>
+                    <div class="row">
+                      <div class="col-3">
+                        <div class="form-group">
+                          <label>Domain Name</label>
+                          <input type="text" class="form-control" [(ngModel)]="domainName">
+                        </div>
+                      </div>
+                      <div class="col-1">
+                        <i ngbTooltip="Add Domain" class="fa fa-plus-circle add-icon" aria-hidden="true"
+                          (click)="addDomain(server)"></i>
+                      </div>
+                    </div>
+
+                    <div class="row mt-3" *ngIf="server.domains">
+                      <div class="col">
+                        <div class="card" *ngFor="let domain of server.domains">
+                          <div class="card-header clickable">
+                            <div class="row">
+                              <div class="col-11">
+                                <span *ngIf="!domain.edit">
+                                  {{domain.domainName}}
+                                </span>
+                                <span *ngIf="domain.edit">
+                                  <div class="form-group mr-3 custom-width">
+                                    <input type="text" placeholder="Edit Domain Name" [(ngModel)]="domain.domainNameNew"
+                                      class="form-control h-20">
+                                  </div>
+
+                                  <i class="fa fa-times mr-2 rem" aria-hidden="true" ngbTooltip="Cancel the Changes"
+                                    (click)="domain.edit = !domain.edit"></i>
+                                  <i (click)="updateDomain(server, domain)" class="fa fa-floppy-o rem"
+                                    aria-hidden="true" ngbTooltip="Save the Domain Name changes"></i>
+                                </span>
+                                <i class="fa fa-pencil ml-3" aria-hidden="true"
+                                  ngbTooltip="Modify  {{domain.domainName}}" (click)="domain.edit = !domain.edit"
+                                  *ngIf="!domain.edit"></i>
+                                <i class="fa fa-trash ml-2" aria-hidden="true"
+                                  ngbTooltip="Delete the  {{domain.domainName}}" *ngIf="!domain.edit"
+                                  (click)="showDeleteAppPopup(server,domain)"></i>
+                              </div>
+                              <div class="col-1 text-right" (click)=" toggleDomain(domain)">
+                                <i [ngClass]="{'fa-plus-square': !domain.toggleDomain, 'fa-minus-square': domain.toggleDomain}"
+                                  class="fa clickable" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                            <div class="loading-block" *ngIf="server.loading">
+                              <app-inline-loader class="loading-block"></app-inline-loader>
+                            </div>
+                          </div>
+
+                          <div class="card-body" *ngIf="domain.toggleDomain">
+
+                            <div class="row">Please Add Script
+                              <i ngbTooltip="Add Scripts" class="fa fa-plus-circle add-icon line-height-30 "
+                                aria-hidden="true" (click)="openCreateOrUpdateScriptModel(domain, null)"></i>
+                            </div>
+
+                            <div class="row mt-3" *ngIf="domain.actionItems">
+                              <div class="col">
+                                <div class="card" *ngFor="let actionItem of domain.actionItems">
+                                  <div class="card">
+                                    <div class="col-11">
+                                      <span>
+                                        <span class="line-height-20"><strong>{{actionItem.actionName}}</strong></span>
+                                        <i class="fa fa-pencil ml-3" aria-hidden="true"
+                                          ngbTooltip="Modify  {{domain.domainName}}"
+                                          (click)="openCreateOrUpdateScriptModel(domain,actionItem)"></i>
+                                        <i class="fa fa-trash ml-2" aria-hidden="true"
+                                          ngbTooltip="Delete the  {{domain.domainName}}" *ngIf="!domain.edit"
+                                          (click)="showDeleteAppPopup(domain,actionItem)"></i>
+                                      </span>
+                                    </div>
+                                    <div class="card-body-table">
+                                      <table class="table wordbreak">
+                                        <thead class="thead-light">
+                                          <tr>
+                                            <th>Script Execution Time</th>
+                                            <th>Script Execution Path</th>
+                                            <th>Step No</th>
+                                            <th>S3 location</th>
+                                            <th>Working Directory</th>
+                                            <th>Status</th>
+                                            <th>Operating System</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          <tr *ngFor="let script of actionItem.scripts">
+                                            <td>{{script.expectedTime}}</td>
+                                            <td>{{script.scriptExecution}}</td>
+                                            <td>{{script.step}}</td>
+                                            <td>{{script.s3Location}}</td>
+                                            <td>{{script.workingDirectory}}</td>
+                                            <td>{{script.status}}</td>
+                                            <td>{{script.os}}</td>
+                                          </tr>
+
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>

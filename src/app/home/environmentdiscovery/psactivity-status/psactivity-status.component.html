@@ -1,0 +1,214 @@
+<div class="col-12 content-container">
+  <form  [formGroup]="schedulepsactivityForm" >
+    <div class="form-group col-4">
+        <label class = "tab-title" style="color: darkblue;"> Schedule Peoplesoft Admin Activities</label>
+        <select class="form-control" (click)="slectpstype($event)"  formControlName="action" [(ngModel)]="selectedOption">
+            <!-- <option   style="background-color: white; padding: 100px;" *ngFor="let action of schedulepsVAlues" [value]="action" >{{action}}</option> -->
+            <option class="bgcolor">PIA Maintenance</option>
+            <option class="bgcolor">---------------------------------------------</option>
+            <option class="bgcolor">bounce</option>
+            <option class="bgcolor">clearcache</option>
+            <option class="bgcolor">ipcclean</option>
+            <option class="bgcolor">start</option>
+            <option class="bgcolor">stop</option>
+            <option class="bgcolor"></option>
+            <option class="bgcolor">Down Time</option>
+            <option class="bgcolor">---------------------------------------------</option>
+            <option class="bgcolor">stop-environment</option>
+            <option class="bgcolor">start-environment</option>
+            <option class="bgcolor"></option>
+            <option class="bgcolor">Database Refresh</option>
+            <option class="bgcolor">---------------------------------------------</option>
+            <option class="bgcolor">autoscaling-instance-refresh</option>
+            <option class="bgcolor">refresh</option>
+            <option class="bgcolor"></option>
+            <option class="bgcolor">Monitoring</option>
+            <option class="bgcolor">---------------------------------------------</option>
+            <option class="bgcolor">pia-status-check</option>
+            <option class="bgcolor">url-healthcheck</option>
+            <option class="bgcolor"></option>
+            <option class="bgcolor">High Availability</option>
+            <option class="bgcolor">---------------------------------------------</option>
+            <option class="bgcolor"  [disabled]="!highavailable">rolling-bounce</option>
+            <option  class="bgcolor" [disabled]="!highavailable">rolling-bounce-clearcache</option>
+            <option  class="bgcolor" [disabled]="!highavailable">schedule-scaling</option>
+            <option class="bgcolor"  [disabled]="!highavailable">weblogic-usercount</option>
+        </select>
+    </div>
+    <div class="row col-12">
+      <div class="col-3 text-center"  > 
+        <button class="btn btn-primary button-color"
+              (click)="openModals(contentRecycleNow, 'md')"
+                [ngClass]="{'disabled':selectedOption == 'stop-environment' || selectedOption == 'url-healthcheck' || selectedOption == 'pia-status-check' || selectedOption == 'weblogic-usercount' || selectedOption == 'start-environment' || selectedOption == 'load-cache' || selectedOption == 'refresh' || selectedOption == 'schedule-scaling' ||selectedOption =='autoscaling-instance-refresh'}" >
+                PS server
+        </button>
+      </div>
+      <div class="col-2 text-center"  *ngIf="selectedOption == 'schedule-scaling'  ; else second">
+        <button class="btn btn-primary button-color"
+            (click)="schedulescale(schedulescaling,'md')">
+            Schedule
+        </button>
+      </div>
+        <ng-template #second>
+          <button class="btn btn-primary button-color"
+          (click)="openModal()">
+          Schedule</button> 
+         </ng-template>
+         <div class="form-group col-6" style="margin-left: 10px;" selectedOption *ngIf="selectedOption == 'pia-status-check'">
+          <label class = "tab-title"> Enter Rate From 0 to 59</label>
+          <input formControlName="rate"  style="margin-left: 5px;" type="text"  class="form-control" 
+          class="form-control-inline">  
+        </div>
+    </div>
+  </form>
+  <div *ngIf="getEventsLength > 0">
+    <async-loader *ngIf="loading"></async-loader>
+    <form [formGroup]="psactivitiesform">
+      <table class="table table-hover" style="margin-top: 10px;">
+        <thead class="thead-light">
+          <tr class="tablestyle">
+            <th class="tableborder">Selection</th>
+            <th class="tableborder">Name</th>
+            <th class="tableborder">ScheduleExpression</th>
+            <th class="tableborder">Description</th>
+            <th class="tableborder">State</th>
+            <th class="tableborder">Update</th>
+            <th class="tableborder">Delete</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let item of items.Events; let i = index">
+          <tr>
+            <td class="tableborder" style="padding-left: 5%;"><input class="form-check-input" type="checkbox" formControlName="checkboxselect"  value="" id="defaultCheck1"></td>
+            <td class="tableborder">{{ item.Name }}</td> 
+            <td class="tableborder">{{ item.ScheduleExpression }}</td>
+            <td class="tableborder">{{ item.Description }}</td>
+            <div class="col-2 text-center"  *ngIf="DesiredCapacity == 'DesiredCapacity'  ; else scheduleenable">
+                <td class="tableborder" style="width: 140px !important;" 
+                [ngClass]="{'disabled':selectedOption == 'schedule-scaling'}"  > 
+              </td> 
+          </div>
+          <ng-template #scheduleenable>
+            <td class="tableborder" style="width: 140px !important;"> 
+              <select  formControlName="State" 
+              class="custom-select"
+              name="ratings"              >
+              <option > {{item.State}}</option>
+              <option>ENABLED</option> 
+              <option>DISABLED</option> 
+              </select>
+          </td>          
+           </ng-template>
+           <td class="tableborder"style="padding: 0%;">
+            <button class="btn btn-primary button-color"  style="margin-top: 14px; height: 38px;"  type="submit" (click) = "savestates(i)">Save</button></td>
+          <td class="tableborder"style="padding: 0%;">
+           <button class="btn btn-primary button-color"  style="margin-top: 14px; height: 38px;"   type="submit" (click) = "deleteschedule(i)">Delete</button>
+           </td>
+          </tr> 
+        </tbody>
+      </table> 
+    </form>
+      </div>
+</div>
+
+<ng-template #schedulescaling let-modal>
+<form class="content-container" [formGroup]="datetimeform"  >
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Schedule Scaling</h4>
+  <button type="button" class="close button-color" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="mb-3">
+
+  <div class="form-group">
+    <div>
+      <label class = "tab-title"> Desired Capacity</label>
+      <input type="text"  class="form-control" formControlName="desiredcapacity"
+      class="form-control-inline">
+      
+    </div>
+    <div>
+      <label class = "tab-title"> Schedule Date</label>
+      <input type="date"  class="form-control" formControlName="scheduledate"
+      class="form-control-inline">
+      
+    </div>
+    <label class = "tab-title"> Schedule Time</label>
+    
+    <input type="time"  class="form-control" formControlName="scheduletime"
+      class="form-control-inline mx-2" min="1" max="23" placeholder="hh:mm">
+      </div>
+
+  </div>  
+</div>
+<div class="modal-footer">
+  <button type="submit" (click) = "schedulescales()" (click)="modal.close('Apply Save')" class="btn btn-primary button-color">Save</button>
+</div>
+</form>
+</ng-template>
+<ng-template #contentRecycleNow let-modal>
+  <form class="content-container" [formGroup]="servertypeform" >
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: darkblue;">Select The Servers To Bounce</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="mb-1"><b>Server Type</b> :</p>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" formControlName="app" class="form-check-input" value="app">app
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" formControlName="web" class="form-check-input" value="web">web
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" formControlName="prcs" class="form-check-input" value="prcs">prcs
+          </label>
+        </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary button-color" (click)="modal.close('Close click')">Close</button>
+    <button type="button" (click) = "psservertype()" (click)="modal.close('Bounce click')"class="btn btn-primary button-color">Bounce</button>
+  </div>
+  </form>
+</ng-template>
+<ng-template #contentRecycleadhoc let-modal>
+  <form class="content-container" [formGroup]="adhocservertypeform" >
+  <div class="modal-header">
+    <h4 class="modal-title" style="color: darkblue;">Select The Servers To Bounce</h4>
+    <button type="button" class="close button-color" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p class="mb-1"><b>Server Type</b> :</p>
+
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" formControlName="app" class="form-check-input" value="app">app
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" formControlName="web" class="form-check-input" value="web">web
+          </label>
+        </div>
+        <div class="form-check">
+          <label class="form-check-label">
+            <input type="checkbox" formControlName="prcs" class="form-check-input" value="prcs">prcs
+          </label>
+        </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary button-color" (click)="modal.close('Close click')">Close</button>
+    <button type="button" (click) = "psservertypeadhoc()" (click)="modal.close('Bounce click')"class="btn btn-primary button-color">Bounce</button>
+  </div>
+  </form>
+</ng-template>

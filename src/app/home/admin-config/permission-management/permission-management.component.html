@@ -1,0 +1,188 @@
+<div class="permission-management-container">
+  <div class="row">
+    <div class="col">
+      <h2 class="page-heading">Configure Permissions</h2>
+    </div>
+  </div>
+  <div class="table-container">
+    <div class="row mb-2">
+      <div class="col-3">
+          <div class="form-group">
+              <label for="searchTable">Search</label>
+              <input id="searchTable" class="form-control" type="text" placeholder="Search By Permission Id's"/>
+          </div>
+      </div>
+      <div class="col-4 offset-5 text-right">
+          <strong class="clickable" (click)="showCreatePage = true">Create New Permission</strong>
+          <i class="fa fa-plus-square-o add-new" aria-hidden="true" ngbTooltip="Create New Permission" container="body" (click)="showCreatePage = true"></i>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <table class="table table-hover">
+          <thead class="thead-light">
+            <tr>
+              <th>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1"></label>
+                </div>
+              </th>
+              <th>Permission Id</th>
+              <th>Permission Name</th>
+              <th>Description</th>
+              <th>Environment</th>
+              <th>Status</th>
+              <th>Created By</th>
+              <th>Created Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr [class.editable]="isEditing">
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                  <label class="form-check-label" for="defaultCheck1"></label>
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing">24189</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Ticket ID">
+                </div>
+              </td>
+              <td>
+                <a href="#" class="link" *ngIf="!isEditing">Edit</a>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Redirect Link">
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing"> With this permission user can View and Edit the Forms and controls </div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Application">
+                </div>
+              </td>
+              <td>
+                <div *ngIf="!isEditing"> QA </div>
+                <div class="form-group" *ngIf="isEditing">
+                  <input type="text" class="form-control" placeholder="Application">
+                </div>
+              </td>
+              <td>
+                <div class="status open" *ngIf="!isEditing">Enabled</div>
+                <div class="form-group" *ngIf="isEditing">
+                  <select name="Status" id="ticketStatus" class="form-control">
+                    <option default>Enabled</option>
+                    <option value="open">Disabled</option>
+                    <option value="closed">On-hold</option>
+                  </select>
+                </div>
+              </td>
+              <td>Purna chandra reddy Chamala</td>
+              <td>Dec 16, 2020</td>
+              <td>
+                  <i class="fa fa-pencil" *ngIf="!isEditing" aria-hidden="true" (click)="isEditing = true" ngbTooltip="Edit" container="body"></i>
+                  <i class="fa fa-trash delete" *ngIf="!isEditing" (click)="showActionPopUP = true"
+                  aria-hidden="true"></i>
+                  <i class="fa fa-ban" *ngIf="isEditing"  aria-hidden="true" (click)="isEditing = false" ngbTooltip="Cancel" container="body"></i>
+                  <i class="fa fa-floppy-o" *ngIf="isEditing" aria-hidden="true" (click)="isEditing = false" ngbTooltip="Save" container="body"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="overlay" *ngIf="showCreatePage"></div>
+
+<div class="panel-wrap shadow" *ngIf="showCreatePage"[class.wrap]="showCreatePage">
+  <div class="panel">
+    <div class="create-container">
+      <div class="row">
+        <div class="col">
+            <h2 class="page-heading">Create New Permission</h2>
+        </div>
+      </div>
+      <div class="form">
+        
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="ticketName">Name</label>
+              <input type="text" id="ticketName" placeholder="Permission" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="createNewDesc" class="d-block">Description</label>
+              <textarea name="" id="createNewDesc" cols="50" rows="5">Please enter some Description</textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="createNewApp">Environment</label>
+              <input type="text" id="createNewApp" placeholder="Application" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="createNewStatus">Status</label>
+              <select name="" id="createNewStatus" class="form-control">
+                <option value="" >Select Status</option>
+                <option value="enabled">Enabled</option>
+                <option value="disabled">Disabled</option>
+                <option value="onhold">On-hold</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-container">
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-secondary" (click)="showCreatePage = false">Cancel</button>
+          </div>
+          <div class="col text-right">
+            <button class="btn btn-primary" (click)="showCreatePage = false">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-container modal-md" *ngIf="showActionPopUP">
+  <div class="popup-header">
+    <a class="close" (click)="showActionPopUP = false"><i class="fa fa-times" aria-hidden="true"></i></a>
+  </div>
+  <div class="popup-body">
+    <div class="warning-content">
+      <div class="row">
+        <div class="col">
+          <h3>{{'Delete'}}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <p>{{'Do you really want to delete Permission ?'}}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-secondary" (click)="showActionPopUP = false">Cancel</button>
+          <button class="btn btn-primary" (click)="showActionPopUP = false">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

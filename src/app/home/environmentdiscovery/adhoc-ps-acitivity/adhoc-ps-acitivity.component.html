@@ -1,0 +1,81 @@
+    <div class="content-container col-10" > 
+            <form  [formGroup]="adohcpsactivityForm" >
+              <div class="form-group col-5">
+                  <label class = "tab-title" style="color: darkblue;"> Adhoc Peoplesoft Admin Activities</label>
+                  <select class="form-control" (click)="slectpstype($event)"  formControlName="action" [(ngModel)]="selectedpsoption">
+                      <!-- <option style="background-color: white" *ngFor="let action of adohcpsvalues" [value]="action" >{{action}}</option> -->
+                      <option class="bgcolor">PIA Maintenance</option>
+                      <option class="bgcolor">----------------------------</option>
+                      <option class="bgcolor">bounce</option>
+                      <option class="bgcolor">clearcache</option>
+                      <option class="bgcolor">ipcclean</option>=
+                      <option class="bgcolor">start</option>
+                      <option class="bgcolor">stop</option>
+                      <option class="bgcolor"></option>
+                      <option class="bgcolor">Down Time</option>
+                      <option class="bgcolor">----------------------------</option>
+                      <option class="bgcolor">stop-environment</option>
+                      <option class="bgcolor">start-environment</option>
+                      <option class="bgcolor"></option>
+                      <option class="bgcolor">Monitoring</option>
+                      <option class="bgcolor">----------------------------</option>
+                      <option class="bgcolor">url-healthcheck</option>
+                      <option class="bgcolor"></option>
+                      <option class="bgcolor">Backups</option>
+                      <option class="bgcolor">----------------------------</option>
+                      <option class="bgcolor">RDS-Backups</option>
+                      <option class="bgcolor"></option>
+                      <option class="bgcolor">High Availability</option>
+                      <option class="bgcolor">----------------------------</option>
+                      <option class="bgcolor"  [disabled]="!highavailable">rolling-bounce</option>
+                      <option  class="bgcolor" [disabled]="!highavailable">rolling-bounce-clearcache</option>
+                  </select>
+          </div>
+          <div class="row col-12">
+            <div class="col-3 text-center"> 
+                <button class="btn btn-primary button-color"
+                (click)="openModalsAghoc(contentRecycleadhoc, 'md')"
+                  [ngClass]="{'disabled':selectedpsoption == 'stop-environment' || selectedpsoption == 'start-environment' || selectedpsoption == 'url-healthcheck' || selectedpsoption == 'load-cache' || selectedpsoption == 'RDS-Backups'}" >
+                  PS Server</button>
+            </div>
+            <div class="col-2 text-center"  > 
+              <button class="btn btn-primary button-color"
+              (click)="adhoc()">
+              Adhoc</button>           
+          </div>
+          </div>
+          </form>
+    </div>
+    <ng-template #contentRecycleadhoc let-modal>
+      <form [formGroup]="adhocservertypeform" >
+      <div class="modal-header">
+        <h4 class="modal-title" style="color: darkblue;">Select The Servers To Bounce</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-1"><b>Server Type</b> :</p>
+    
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" formControlName="app" class="form-check-input" value="app">app
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" formControlName="web" class="form-check-input" value="web">web
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="checkbox" formControlName="prcs" class="form-check-input" value="prcs">prcs
+              </label>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" style="margin-left: 15px;background-color: green !important;color: white;background: green;border-color: green;" class="btn btn-primary" (click)="modal.close('Close click')">Close</button>
+        <button type="button" style="margin-left: 15px;background-color: green !important;color: white;background: green;border-color: green;" (click) = "psservertypeadhoc()" (click)="modal.close('Bounce click')"class="btn btn-primary button-color">Bounce</button>
+      </div>
+      </form>
+    </ng-template>

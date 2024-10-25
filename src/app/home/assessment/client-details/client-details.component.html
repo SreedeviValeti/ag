@@ -1,0 +1,246 @@
+<!-- <div row>
+    <div class="col-6" style="margin-top: 30px; margin-left: -15px;">
+        <h1  style="font-size: 30px;" class="tab-title">Client Details</h1>
+      </div>
+    <form [formGroup]="clientDetails"  (ngSubmit)="clientDetailsSubmit()" >
+    <div class="row mt-12">
+        <div class="col-6"> 
+            <div>
+                <div class="form-group">
+                    <label>Client level details </label>
+                    <input type="text" class="form-control" value = "Inupu1" formControlName="Clientleveldetails" placeholder="Client level details">
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                    <label>Client escalation contact </label>
+                    <input type="text" class="form-control" value = "Inupu2" formControlName="Clientescalationcontact" placeholder="Client escalation contact">
+                </div>
+            </div>
+    </div>
+
+
+    <div class="row mt-12">
+
+            <div class="col-6">
+                <div>
+                    <div class="form-group">
+                        <label>ERPA POD Owner</label>
+                        <input type="text" class="form-control" value = "Inupu3" formControlName="ERPAPODOwner" placeholder="ERPA POD Owner">
+                    </div>
+                </div>
+            </div> 
+            <div class="col-6">
+                <div class="form-group">
+                    <label>ERPA CSM</label>
+                    <input type="text" class="form-control" value = "Inupu4" formControlName="ERPACSM" placeholder="ERPA CSM">
+                </div>
+            </div>
+        </div>
+
+    <div class="row mt-12">
+
+        <div class="col-6">
+            <div>
+                <div class="form-group">
+                    <label>Primary PSA</label>
+                    <input type="text" class="form-control" value = "Inupu5" formControlName="PrimaryPSA" placeholder="Primary PSA">
+          </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div>
+                <div class="form-group">
+                    <label>Primary DBA</label>
+                    <input type="text" class="form-control" value = "Inupu6" formControlName="PrimaryDBA" placeholder="Primary DBA">
+          </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</div>  -->
+<div class="content-container">
+    <div class="row">
+      <div class="col-6">
+        <h5 class="tab-title" style="color: darkblue;">Contact Details</h5>
+      </div>
+      <div class="col-2 text-right">
+        <i class="fa fa-times mr-3" *ngIf="contactDetails" aria-hidden="true" ngbTooltip="Cancel the Changes"
+          (click)="contactDetails = !contactDetails"></i>
+        <i *ngIf="contactDetails" (click)="contactDetails = !contactDetails" class="fa fa-floppy-o" aria-hidden="true"
+          ngbTooltip="Save the Contact Details"></i>
+        <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="Contact Details"
+          (click)="contactDetails = !contactDetails" *ngIf="!contactDetails"></i>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-8">
+        <div class="content-enabled" [class.content-disabled]="!contactDetails">
+          <table class="table mb-0">
+            <tbody>
+              <tr>
+                <td>Client Level</td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="Client Level">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Client Escalation Contact
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="Client escalation contact">
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <h5 class="tab-title" style="color: darkblue;">Client Details</h5>
+      </div>
+      <div class="col-2 text-right">
+        <i class="fa fa-times mr-3" *ngIf="clienttDetails" aria-hidden="true" ngbTooltip="Cancel the Changes"
+          (click)="clienttDetails = !clienttDetails"></i>
+        <i *ngIf="clienttDetails" (click)="clienttDetails = !clienttDetails" class="fa fa-floppy-o" aria-hidden="true"
+          ngbTooltip="Save the Client Details"></i>
+        <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="Client Details"
+          (click)="clienttDetails = !clienttDetails" *ngIf="!clienttDetails"></i>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-8">
+        <div class="content-enabled" [class.content-disabled]="!clienttDetails">
+          <table class="table mb-0">
+            <tbody>
+              <tr>
+                <td>Primary Region</td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="Primary Region">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>DR Region
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="DR region">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>SSO Provider
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="SSO Provider">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>CSI Number
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="CSI Number">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Support User for CSI
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="Support user for CSI">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Support
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <select class="form-control">
+                      <option *ngFor="let supports of support" value="{{supports}}">{{supports}}</option>
+                  </select>  
+                  </div>
+                </td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <h5 class="tab-title" style="color: darkblue;">ERPA Details</h5>
+      </div>
+      <div class="col-2 text-right">
+        <i class="fa fa-times mr-3" *ngIf="erpaDetails" aria-hidden="true" ngbTooltip="Cancel the Changes"
+          (click)="erpaDetails = !erpaDetails"></i>
+        <i *ngIf="erpaDetails" (click)="erpaDetails = !erpaDetails" class="fa fa-floppy-o" aria-hidden="true"
+          ngbTooltip="Save the ERPA Details"></i>
+        <i class="fa fa-pencil" aria-hidden="true" ngbTooltip="ERPA Details"
+          (click)="erpaDetails = !erpaDetails" *ngIf="!erpaDetails"></i>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-8">
+        <div class="content-enabled" [class.content-disabled]="!erpaDetails">
+          <table class="table mb-0">
+            <tbody>
+              <tr>
+                <td>POD Owner</td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="POD Owner">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td> CSM
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="CSM">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Primary PSA
+
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="Primary PSA
+                    ">
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Primary DBA
+
+                </td>
+                <td>
+                  <div class="form-group mb-0">
+                    <input class="form-control" value="Primary DBA
+                    ">
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>

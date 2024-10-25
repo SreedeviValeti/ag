@@ -1,0 +1,114 @@
+<div class="setup-pillar-container">
+  <async-loader *ngIf="loading"></async-loader>
+  <div class="row">
+    <div class="col">
+      <h2 class="page-heading"  style="color: darkblue;">Environment Discovery</h2>
+    </div>
+  </div>
+  
+  <div class="row col-12">
+    <div class="col-4">
+        <div class="form-check-inline"  >
+            <label class="form-check-label">
+              <input type="radio"  class="form-check-input" (click)="prod($event)"  name="env" value="prod" > PROD
+            </label>
+            <label  class="form-check-label" style="padding-left: 10px;">
+              <input type="radio" class="form-check-input" (click)="prod($event)" name="env" value="nprd" > NON-PROD
+            </label>
+        </div>                                
+    </div>
+<!--       
+    <div class="form-group col-4">
+      <label class = "tab-title"  style="color: black;"> Log Retention</label>  &nbsp;&nbsp;   :&nbsp;
+        <input type="text" name = "application_log_retention" [(ngModel)]="application_log_retention" >
+    </div>
+    <div class="form-group col-4">
+      <button type="submit" class="btn btn-primary button-color"  (click)="save()">Save</button>    
+    </div> -->
+  </div>
+<h2 style="color: darkblue;"> Application Pillars</h2>
+  <div class="pillar-cards-container" *ngIf="!loading">
+      <div class="row"  (click)="expandOrcollapse(pillar, $event)"  *ngFor="let pillar of pillarList">
+        <div class="col"  >
+          <div class="card pillar">
+            <div class="card shadow">
+            <div class="card-header">
+              <h6 class="mr-3" style="font-weight: bold;color: #288CC9;">{{pillar['name']}}</h6>
+  
+              <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!pillar.expand" aria-hidden="true" (click)="expandOrcollapse(pillar, $event)"></i>
+              <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="pillar.expand" aria-hidden="true" (click)="expandOrcollapse(pillar, $event)"></i>
+            </div>
+            <div class="cards-container" *ngIf="pillar.expand">
+              <app-inline-loader *ngIf="pillar.envLoading"></app-inline-loader>
+              <div class="row"  *ngIf="!pillar.envLoading">
+                <div class="col-6" *ngFor="let env of pillar.environmentDetails">
+                  <app-inline-loader *ngIf="env.loading"></app-inline-loader>
+                  <div class="card shadow" [ngClass]="{'active':!env.disableenv,
+                  'inactive':env.disableenv, 'checking': false}">
+                <div class="card-header">
+                  <div class="row">
+                    <div class="col">
+                      <strong>
+                        {{ env.envname| uppercase}}
+                        </strong>
+                  </div>
+                  </div>
+                  </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <td class="border-top-0">Environment:</td>
+                            <td class="border-top-0">{{ env.env}}</td>
+                          </tr>
+                          <tr>
+                            <td>Application Version:</td>
+                            <td>{{env.application_version}}</td>
+                          </tr>
+                          <tr>
+                            <td>Environment Type:</td>
+                            <td>{{ env.environment_type}}</td>
+                          </tr>
+                          <tr>
+                            <td>Pillar:</td>
+                            <td>{{ env.pillar}}</td>
+                          </tr>
+                          <tr>
+                            <td>Peopletools Version:</td>
+                            <td>{{ env.peopletools_version}}</td>
+                          </tr>
+                          <tr>
+                            <td>Region:</td>
+                            <td>{{ env.region}}</td>
+                          </tr>
+                          <tr>
+                            <td>High Availability:</td>
+                            <td>{{ env.high_availability}}</td>
+                          </tr>
+                          <tr>
+                            <td>Login URL:</td>
+                            <td><a href= {{env.login_url}} target="_blank"> {{env.login_url}}</a></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="button" [disabled]="env.disableenv" [class.disabled]="env.disableenv"  class="btn btn-primary button-color "
+                     [routerLink]="[env.envname,'view']">View</button>
+                </div>
+                </div>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+
+<p>{{ message }}</p>
+

@@ -1,0 +1,50 @@
+@import "../../../../../styles/_variables";
+
+.icon {
+    height: 36px;
+    width: 36px;
+    text-indent: -9999px;
+    cursor: pointer;
+    display: inline-block;
+    border: 1px solid #868587;
+    border-radius: 50%;
+    transition: all 222ms ease-in-out;
+    & + .icon {
+      margin-left: 10px;
+    }
+    &:hover {
+      transform: scale(1.1);
+      transition: all 222ms ease-in-out;
+    }
+    &.schedule-env {
+      background-image: url('../../../../../assets/images/schedule.png');
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      background-position: 50%;
+    }
+    &.refresh-env {
+      background-image: url('../../../../../assets/images/cloud-refresh.png');
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      background-position: 50%;
+    }
+    &.refresh {
+      background-image: url('../../../../../assets/images/refresh.png');
+      background-repeat: no-repeat;
+      background-size: 24px 24px;
+      background-position: 50%;
+    }
+  }
+
+  // .disabled{
+  //   pointer-events:none;
+  //   cursor: pointer;
+  //   background-color: #dddddd;
+  //   color: #2c76BF;
+  // }
+  
+  .enabled{
+     background-color: #6B9FD2;
+   }
+   
+  

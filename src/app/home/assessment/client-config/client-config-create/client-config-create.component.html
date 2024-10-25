@@ -1,0 +1,233 @@
+<async-loader *ngIf="loading">Creating Environment...</async-loader>
+<form [formGroup]="app" [ngClass]="{'invalid': app.invalid }">
+    <div class="modal-header">
+        <h4 class="modal-title">Create Application</h4>
+        <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Pillar Name</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Tools</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Tools Patch</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Application</label>
+                    <input type="text" formControlName="application" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>PUM</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Database</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>RDS / EC2</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Version</label>
+                    <input type="text" formControlName="application" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Database Size</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>OS</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>OS Version</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Windows Version</label>
+                    <input type="text" formControlName="application" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Base AMI ID</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>AMI Source</label>
+                    <select class="form-control"  formControlName="peopleTools">
+                        <option *ngFor="let ami of amiSource" value="{{ami}}">{{ami}}</option>
+                    </select> 
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>HA Environment List</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>NHA Environment List</label>
+                    <input type="text" formControlName="application" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>External Facing LB</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Elastic</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>LogStash</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>OS Version</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Number of Zones</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Prod Baseline Load for App/Web</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Baseline Domain Count</label>
+                    <input type="text" formControlName="application" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Config S3 Bucket</label>
+                    <input type="text" formControlName="application" class="form-control">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Prod Peak Load for App/Web</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Domain Count for Peak Load</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>S/W S3 Bucket</label>
+                    <input type="text" formControlName="envName" class="form-control">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Customizations S3 Bucket</label>
+                    <input type="text" formControlName="peopleTools" class="form-control">
+                </div>
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="dismiss()">Cancel</button>
+        <button type="submit" class="btn btn-primary" [disabled]=" !app.valid " (click)="save()">Create</button>
+    </div>
+</form>

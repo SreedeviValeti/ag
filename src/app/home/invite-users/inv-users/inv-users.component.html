@@ -1,0 +1,29 @@
+<async-loader *ngIf="loading"></async-loader>
+<div row *ngIf="!loading" >
+    <div class="col-6" style="margin-top: 30px">
+        <h1  style="font-size: 30px; color: darkblue;" class="tab-title">Invite Users</h1>
+      </div>
+      <div class="col-8">
+    <form class="content-container" [formGroup]="invForm"  (ngSubmit)="CreateInvUsers()" >
+        <div class="col-6">
+            <div class="form-group">
+                    <label class = "tab-title">First Name</label>
+                    <input type="text" class="form-control" formControlName="firstname">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class = "tab-title">Last Name</label>
+                <input type="text" class="form-control" value="none" formControlName="lastname">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class = "tab-title">Email ID</label>
+                    <input type="text" class="form-control" value="none" formControlName="emailid">
+            </div>
+        </div>
+        <button class="btn btn-primary button-color" >Create</button>    
+    </form>
+    </div>
+</div>

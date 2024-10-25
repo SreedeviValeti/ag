@@ -1,0 +1,70 @@
+<async-loader *ngIf="loading"></async-loader>
+<div row *ngIf="!loading" >  
+        <div class="col-6" style="margin-top: 30px">
+        <h1  style="font-size: 30px; color: darkblue;" class="tab-title">Install PS Home</h1>
+      </div>
+      <div class="col-8">
+    <form class="content-container" [formGroup]="psHome"  (ngSubmit)="installPSHome()" >
+        <div class="form-check-inline"  >
+            <label class="form-check-label">
+              <input type="radio"  class="form-check-input" (click)="osType($event)"  name="env" value="oraclelinux" > oraclelinux
+            </label>
+            <label  class="form-check-label" style="padding-left: 10px;">
+              <input type="radio" class="form-check-input" (click)="osType($event)" name="env" value="redhatlinux" > redhatlinux
+            </label>
+        </div>
+        <div class="col-6"> 
+            <div>
+                <div class="form-group">
+                    <label class = "tab-title">AMI ID</label>
+                    <select class="form-control" formControlName="amiid">
+                        <option *ngFor="let amiid of amivalues" [value]="amiid.ImageId">{{amiid.ImageId}} {{amiid.AMIName}} {{amiid.CreationDate}}</option>
+                    </select>                
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                    <label class = "tab-title" >DPK Patch ID</label>
+                    <input type="text" class="form-control" formControlName="patchnumber">
+                </div>
+            </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class = "tab-title">PeopleTools Version</label>
+                <input type="text" class="form-control" formControlName="toolsversion">
+            </div>
+        </div>
+
+            <div class="col-6">
+                <div>
+                    <div class="form-group">
+                        <label class = "tab-title">Environment Type</label>
+                        <select class="form-control" formControlName="envtype">
+                            <option *ngFor="let env of environments" [value]="env">{{env}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div> 
+
+        <div class="col-6">
+            <div class="form-group">
+                <label class = "tab-title">Platform</label>
+                <select class="form-control" formControlName="platform">
+                    <option *ngFor="let os of os" [value]="os">{{os}}</option>
+                </select>   
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label class = "tab-title">unicode</label>
+                <select class="form-control" formControlName="unicode">
+                    <option *ngFor="let unicodeval of unicodevalues" [value]="unicodeval">{{unicodeval}}</option>
+                </select>           
+            </div>
+         </div>
+
+        <button type="submit" class="btn btn-primary button-color" >Create</button>    
+    </form>
+    </div>
+</div>

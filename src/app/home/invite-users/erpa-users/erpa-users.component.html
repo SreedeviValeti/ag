@@ -1,0 +1,89 @@
+<async-loader *ngIf="loading"></async-loader>
+<div class="create-container">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header clickable">
+          <div class="row">
+            <div class="col-11">
+              <span style="color: darkblue;font-weight: bold;">
+                ERPA
+              </span>
+            </div>
+            <div class="col-1 text-right">
+              <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!userData.toggleApp" aria-hidden="true" (click)="toggleApp(userData.ERPA)"></i>
+              <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="userData.toggleApp" aria-hidden="true" (click)="toggleApp(!userData.ERPA)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="userData.ERPA.toggleApp">
+          <div class="row" >
+            <div class="col" >
+              <div class="card">
+          <div class="card-body">
+            <div class="row" *ngFor="let data of userData.ERPA ">
+              <div class="col">
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor="let key of objectKeys(data)">
+                      <td>{{key}}
+                      </td>  
+                      <td>{{data[key]}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>    
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header clickable">
+          <div class="row">
+            <div class="col-11">
+              <span style="color: darkblue;font-weight: bold;">
+                CLIENT
+              </span>
+            </div>
+            <div class="col-1 text-right">
+              <i class="fa fa-plus-square-o rem-125 pull-right" *ngIf="!userData.toggleClient" aria-hidden="true" (click)="toggleClient(userData.CLIENT)"></i>
+              <i class="fa fa-minus-square-o rem-125 pull-right" *ngIf="userData.toggleClient" aria-hidden="true" (click)="toggleClient(!userData.CLIENT)"></i>
+            </div>
+          </div>
+          </div>
+          <div class="card-body" *ngIf="userData.CLIENT.toggleClient">
+          <div class="row" >
+            <div class="col" >
+              <div class="card">
+          <div class="card-body">
+            <div class="row" *ngFor="let data of userData.CLIENT ">
+              <div class="col">
+                <table class="table">
+                  <tbody>
+                    <tr *ngFor="let key of objectKeys(data)">
+                      <td>{{key}}
+                      </td>  
+                      <td>{{data[key]}}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+              </div>
+          </div>
+          </div>
+          </div>
+          </div>
+          </div>
+        </div>    
+    </div>
+  </div>
+</div>

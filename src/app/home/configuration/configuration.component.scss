@@ -1,0 +1,17 @@
+@import "../../../styles/_variables";
+
+.dashboard-container {
+  padding: 10px 0;
+ // background-color: aqua;
+ .row{
+     .card{
+         .card-header{
+            background-color:#2c76BF;
+            color:$white;
+         }
+     }
+ }
+}
+.popup-container{
+    top:25%;
+}

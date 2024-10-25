@@ -1,0 +1,34 @@
+<div class="steps-container">
+    <async-loader *ngIf="loading"></async-loader>
+    <div class="row">
+        <form  style="margin-left: 30px;" class="content-container" [formGroup]="uploadform"  (ngSubmit)="requestUpload()" >
+            <div class="col-10">
+                <div class="form-group">
+                    <label class = "tab-title">Script Type</label>
+                    <select class="form-control" formControlName="scriptstype" style="width: 180px !important;">
+                        <option *ngFor="let amitypes of scriptsvalues"    value="amitypes" [value]="amitypes">{{amitypes}}</option>
+                    </select>                 
+                </div>
+            </div>
+        </form>
+        <div style="margin-top: 10px;" >
+            <span class="pos-rel" (clickOutside)="onClickedOutside($event)">
+                <a class="upload-icon icons"  ngbTooltip="Upload File" (click)="showUpload = !showUpload"></a>
+                <div class="upload-popover-container" *ngIf="showUpload" >
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="file-upload">
+                                <h3>Please Select Upload File</h3>
+                                <input type="file" #fileUpload id="myFile" name="filename"
+                                (change)="onFileChange($event)" #fileInput>
+                                <button class="btn btn-primary float-right" (click)="requestUpload()">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </span>
+            <span class="vertical-separator big"></span>
+            <a id="downloadAnchorElem" style="display:none"></a>
+        </div>
+    </div>
+</div>
